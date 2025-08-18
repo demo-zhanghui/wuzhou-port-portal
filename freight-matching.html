@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>货运撮合 - 梧州港门户</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="css/freight-matching.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- 顶部导航栏 -->
+    <header class="header">
+        <nav class="nav-container">
+            <div class="nav-logo">
+                <img src="images/企业logo.png" alt="梧州港Logo" class="logo-img">
+                <span class="logo-text">梧州市多式联运供应链信息平台</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-item">首页</a></li>
+                <li><a href="logistics-tracking.html" class="nav-item">物流跟踪</a></li>
+                <li><a href="freight-matching.html" class="nav-item active">货运撮合</a></li>
+                <li><a href="policy-benefits.html" class="nav-item">政策惠企</a></li>
+                <li><a href="news.html" class="nav-item">新闻</a></li>
+                <li><a href="partners.html" class="nav-item">合作伙伴</a></li>
+            </ul>
+            <div class="auth-buttons">
+                <button class="btn-login" onclick="openLoginModal()">登录</button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- 主内容区 - 符合语义化要求 -->
+    <main>
+        <!-- 筛选功能区 - 单一统一容器，根治重叠问题 -->
+        <section class="filter-section">
+            <!-- 主筛选行 - 使用flex-wrap防止重叠 -->
+            <div class="main-filter-row">
+                <!-- 关键词搜索 -->
+                <div class="search-box">
+                    <i class="fas fa-search search-icon"></i>
+                    <input type="text" placeholder="搜索目的地、货物名称等" class="search-input" id="searchInput">
+                </div>
+                
+                <!-- 出发地筛选 -->
+                <div class="filter-group">
+                    <label class="filter-label">出发地</label>
+                    <select class="filter-select">
+                        <option value="">梧州港全域</option>
+                        <option value="changzhou">长洲码头</option>
+                        <option value="xijiang">西江码头</option>
+                        <option value="gui">桂江码头</option>
+                    </select>
+                </div>
+                
+                <!-- 目的地筛选 -->
+                <div class="filter-group">
+                    <label class="filter-label">目的地</label>
+                    <select class="filter-select">
+                        <option value="">全部目的地</option>
+                        <option value="guangzhou">广州港</option>
+                        <option value="shenzhen">深圳港</option>
+                        <option value="foshan">佛山港</option>
+                        <option value="zhuhai">珠海港</option>
+                    </select>
+                </div>
+                
+                <!-- 货物类型筛选 -->
+                <div class="filter-group">
+                    <label class="filter-label">货物类型</label>
+                    <select class="filter-select">
+                        <option value="">全部货物类型</option>
+                        <option value="ceramic">陶瓷制品</option>
+                        <option value="building">建筑材料</option>
+                        <option value="chemical">化工产品</option>
+                        <option value="food">食品饮料</option>
+                        <option value="machinery">机械设备</option>
+                        <option value="textile">纺织品</option>
+                        <option value="electronics">电子产品</option>
+                        <option value="agricultural">农产品</option>
+                    </select>
+                </div>
+                
+                <!-- 运输方式筛选 -->
+                <div class="filter-group">
+                    <label class="filter-label">运输方式</label>
+                    <select class="filter-select">
+                        <option value="">全部运输方式</option>
+                        <option value="water">水路运输</option>
+                        <option value="road">公路运输</option>
+                        <option value="rail">铁路运输</option>
+                        <option value="multimodal">多式联运</option>
+                    </select>
+                </div>
+                
+                <!-- 搜索按钮 -->
+                <button class="search-btn" id="searchBtn" onclick="performSearch()">
+                    <i class="fas fa-search"></i>
+                    查询货源
+                </button>
+            </div>
+            
+            <!-- 快捷排序行 - 垂直排列，防止重叠 -->
+            <div class="sort-row">
+                <span class="sort-label">排序方式：</span>
+                <button class="sort-btn active">默认推荐</button>
+                <button class="sort-btn">最新发布</button>
+                <button class="sort-btn">时效最急</button>
+                <button class="sort-btn">价格最优</button>
+            </div>
+        </section>
+
+        <!-- 区域二：热门路线轮播区 -->
+        <section class="routes-section">
+            <div class="container">
+                <!-- 标题区 (保持不变) -->
+                <div class="section-title">
+                    <div class="hot-routes-title-wrapper">
+                        <div class="title-decoration"></div>
+                        <h2 class="hot-routes-title">
+                            <i class="fas fa-fire"></i>
+                            热门路线
+                        </h2>
+                        <p class="hot-routes-subtitle">Popular routes</p>
+                    </div>
+                </div>
+                
+                <!-- 轮播容器 -->
+                <div class="slider-container">
+                    <!-- 可滚动的轨道 -->
+                    <div class="slider-track">
+                        <!-- 热门路线卡片 1 -->
+                        <div class="route-card">
+                            <div class="route-image-container">
+                                <img src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&h=200&fit=crop" alt="铁路货运" class="route-image">
+                                <div class="hot-route-badge">热门路线</div>
+                            </div>
+                            <div class="route-content">
+                                <div class="route-header">
+                                    <span class="business-tag sea-rail">海铁业务</span>
+                                    <span class="validity-date">2024/04/02~2027/04/02</span>
+                                </div>
+                                <div class="route-main">
+                                    <h3 class="route-path">湖州西铁路场站 → 宁波舟山港</h3>
+                                    <div class="route-duration">
+                                        <i class="fas fa-clock"></i>
+                                        <span>8小时</span>
+                                    </div>
+                                </div>
+                                <div class="route-specs">20GP/40GP/40HQ</div>
+                                <div class="route-price">
+                                    <span class="price-label">预估:</span>
+                                    <span class="price-value">¥1300/¥1400/¥1400</span>
+                                </div>
+                                <div class="route-actions">
+                                    <button class="btn-primary">立即下单</button>
+                                    <div class="consult-wrapper">
+                                        <button class="btn-secondary">在线咨询</button>
+                                        <span class="discount-badge">更多优惠</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 热门路线卡片 2 -->
+                        <div class="route-card">
+                            <div class="route-image-container">
+                                <img src="https://images.unsplash.com/photo-1566576912321-d58ddd7a6088?w=400&h=200&fit=crop" alt="内河航运" class="route-image">
+                                <div class="hot-route-badge">热门路线</div>
+                            </div>
+                            <div class="route-content">
+                                <div class="route-header">
+                                    <span class="business-tag inland">内河业务</span>
+                                    <span class="validity-date">2025/04/01~2028/04/01</span>
+                                </div>
+                                <div class="route-main">
+                                    <h3 class="route-path">福州江阴港 → 如皋码头</h3>
+                                    <div class="route-duration">
+                                        <i class="fas fa-clock"></i>
+                                        <span>4.5天</span>
+                                    </div>
+                                </div>
+                                <div class="route-specs">20GP/40GP/40HC</div>
+                                <div class="route-price">
+                                    <span class="price-label">预估:</span>
+                                    <span class="price-value">¥1200/¥-/-</span>
+                                </div>
+                                <div class="route-actions">
+                                    <button class="btn-primary">立即下单</button>
+                                    <div class="consult-wrapper">
+                                        <button class="btn-secondary">在线咨询</button>
+                                        <span class="discount-badge">更多优惠</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 热门路线卡片 3 -->
+                        <div class="route-card">
+                            <div class="route-image-container">
+                                <img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=400&h=200&fit=crop" alt="公路运输" class="route-image">
+                                <div class="hot-route-badge">热门路线</div>
+                            </div>
+                            <div class="route-content">
+                                <div class="route-header">
+                                    <span class="business-tag road">公路业务</span>
+                                    <span class="validity-date">2024/03/15~2027/03/15</span>
+                                </div>
+                                <div class="route-main">
+                                    <h3 class="route-path">梧州港 → 广州港</h3>
+                                    <div class="route-duration">
+                                        <i class="fas fa-clock"></i>
+                                        <span>6小时</span>
+                                    </div>
+                                </div>
+                                <div class="route-specs">整车/零担</div>
+                                <div class="route-price">
+                                    <span class="price-label">预估:</span>
+                                    <span class="price-value">¥800/吨</span>
+                                </div>
+                                <div class="route-actions">
+                                    <button class="btn-primary">立即下单</button>
+                                    <div class="consult-wrapper">
+                                        <button class="btn-secondary">在线咨询</button>
+                                        <span class="discount-badge">更多优惠</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 热门路线卡片 4 -->
+                        <div class="route-card">
+                            <div class="route-image-container">
+                                <img src="https://images.unsplash.com/photo-1570125909232-eb263c188f7e?w=400&h=200&fit=crop" alt="航空货运" class="route-image">
+                                <div class="hot-route-badge">热门路线</div>
+                            </div>
+                            <div class="route-content">
+                                <div class="route-header">
+                                    <span class="business-tag air">航空业务</span>
+                                    <span class="validity-date">2024/05/01~2027/05/01</span>
+                                </div>
+                                <div class="route-main">
+                                    <h3 class="route-path">广州白云机场 → 上海浦东机场</h3>
+                                    <div class="route-duration">
+                                        <i class="fas fa-clock"></i>
+                                        <span>2小时</span>
+                                    </div>
+                                </div>
+                                <div class="route-specs">普货/危险品</div>
+                                <div class="route-price">
+                                    <span class="price-label">预估:</span>
+                                    <span class="price-value">¥8.5/公斤</span>
+                                </div>
+                                <div class="route-actions">
+                                    <button class="btn-primary">立即下单</button>
+                                    <div class="consult-wrapper">
+                                        <button class="btn-secondary">在线咨询</button>
+                                        <span class="discount-badge">更多优惠</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 热门路线卡片 5 -->
+                        <div class="route-card">
+                            <div class="route-image-container">
+                                <img src="https://images.unsplash.com/photo-1494412651409-8963ce7935a7?w=400&h=200&fit=crop" alt="多式联运" class="route-image">
+                                <div class="hot-route-badge">热门路线</div>
+                            </div>
+                            <div class="route-content">
+                                <div class="route-header">
+                                    <span class="business-tag multimodal">多式联运</span>
+                                    <span class="validity-date">2024/06/01~2027/06/01</span>
+                                </div>
+                                <div class="route-main">
+                                    <h3 class="route-path">重庆果园港 → 宁波舟山港</h3>
+                                    <div class="route-duration">
+                                        <i class="fas fa-clock"></i>
+                                        <span>3天</span>
+                                    </div>
+                                </div>
+                                <div class="route-specs">20GP/40GP/40HQ</div>
+                                <div class="route-price">
+                                    <span class="price-label">预估:</span>
+                                    <span class="price-value">¥2800/¥3200/¥3200</span>
+                                </div>
+                                <div class="route-actions">
+                                    <button class="btn-primary">立即下单</button>
+                                    <div class="consult-wrapper">
+                                        <button class="btn-secondary">在线咨询</button>
+                                        <span class="discount-badge">更多优惠</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 热门路线卡片 6 -->
+                        <div class="route-card">
+                            <div class="route-image-container">
+                                <img src="https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=400&h=200&fit=crop" alt="冷链运输" class="route-image">
+                                <div class="hot-route-badge">热门路线</div>
+                            </div>
+                            <div class="route-content">
+                                <div class="route-header">
+                                    <span class="business-tag cold-chain">冷链运输</span>
+                                    <span class="validity-date">2024/07/01~2027/07/01</span>
+                                </div>
+                                <div class="route-main">
+                                    <h3 class="route-path">青岛港 → 深圳盐田港</h3>
+                                    <div class="route-duration">
+                                        <i class="fas fa-clock"></i>
+                                        <span>18小时</span>
+                                    </div>
+                                </div>
+                                <div class="route-specs">20RF/40RF</div>
+                                <div class="route-price">
+                                    <span class="price-label">预估:</span>
+                                    <span class="price-value">¥1800/¥2200</span>
+                                </div>
+                                <div class="route-actions">
+                                    <button class="btn-primary">立即下单</button>
+                                    <div class="consult-wrapper">
+                                        <button class="btn-secondary">在线咨询</button>
+                                        <span class="discount-badge">更多优惠</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 左右导航按钮 -->
+                    <button class="slider-btn prev-btn">&lt;</button>
+                    <button class="slider-btn next-btn">&gt;</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 区域三：更多货源列表区 (列表形式) -->
+        <section class="freight-list-section">
+            <div class="container">
+                <div class="freight-list-header">
+                    <h2 class="section-title">更多货源</h2>
+                    <div class="list-controls">
+                        <span class="total-count">共找到 156 条货源信息</span>
+                        <div class="view-options">
+                            <button class="view-btn active">列表视图</button>
+                            <button class="view-btn">卡片视图</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="freight-list">
+                    <!-- 货源列表项 1 -->
+                    <div class="freight-item">
+                        <div class="freight-info">
+                            <div class="route-info">
+                                <h3 class="freight-route">梧州港 → 深圳港</h3>
+                                <span class="transport-type">水路运输</span>
+                            </div>
+                            <div class="cargo-info">
+                                <span class="cargo-type">陶瓷制品</span>
+                                <span class="cargo-weight">20吨</span>
+                            </div>
+                            <div class="time-info">
+                                <span class="pickup-time">装货时间: 2024-04-15</span>
+                                <span class="delivery-time">预计到达: 2024-04-18</span>
+                            </div>
+                            <div class="shipper-info">
+                                <span class="shipper-name">广西梧州陶瓷有限公司</span>
+                                <span class="contact-phone">138****5678</span>
+                            </div>
+                        </div>
+                        <div class="freight-price">
+                            <span class="price-amount">¥2,500</span>
+                            <span class="price-unit">/吨</span>
+                        </div>
+                        <div class="freight-actions">
+                            <button class="btn-bid">参与竞价</button>
+                        </div>
+                    </div>
+
+                    <!-- 货源列表项 2 -->
+                    <div class="freight-item">
+                        <div class="freight-info">
+                            <div class="route-info">
+                                <h3 class="freight-route">梧州港 → 广州港</h3>
+                                <span class="transport-type">多式联运</span>
+                            </div>
+                            <div class="cargo-info">
+                                <span class="cargo-type">建筑材料</span>
+                                <span class="cargo-weight">50吨</span>
+                            </div>
+                            <div class="time-info">
+                                <span class="pickup-time">装货时间: 2024-04-16</span>
+                                <span class="delivery-time">预计到达: 2024-04-20</span>
+                            </div>
+                            <div class="shipper-info">
+                                <span class="shipper-name">梧州建材集团</span>
+                                <span class="contact-phone">139****1234</span>
+                            </div>
+                        </div>
+                        <div class="freight-price">
+                            <span class="price-amount">¥1,800</span>
+                            <span class="price-unit">/吨</span>
+                        </div>
+                        <div class="freight-actions">
+                            <button class="btn-bid">参与竞价</button>
+                        </div>
+                    </div>
+
+                    <!-- 货源列表项 3 -->
+                    <div class="freight-item">
+                        <div class="freight-info">
+                            <div class="route-info">
+                                <h3 class="freight-route">梧州港 → 珠海港</h3>
+                                <span class="transport-type">水路运输</span>
+                            </div>
+                            <div class="cargo-info">
+                                <span class="cargo-type">化工产品</span>
+                                <span class="cargo-weight">30吨</span>
+                            </div>
+                            <div class="time-info">
+                                <span class="pickup-time">装货时间: 2024-04-17</span>
+                                <span class="delivery-time">预计到达: 2024-04-21</span>
+                            </div>
+                            <div class="shipper-info">
+                                <span class="shipper-name">梧州化工有限公司</span>
+                                <span class="contact-phone">137****9876</span>
+                            </div>
+                        </div>
+                        <div class="freight-price">
+                            <span class="price-amount">¥3,200</span>
+                            <span class="price-unit">/吨</span>
+                        </div>
+                        <div class="freight-actions">
+                            <button class="btn-bid">参与竞价</button>
+                        </div>
+                    </div>
+
+                    <!-- 货源列表项 4 -->
+                    <div class="freight-item">
+                        <div class="freight-info">
+                            <div class="route-info">
+                                <h3 class="freight-route">梧州港 → 佛山港</h3>
+                                <span class="transport-type">公路运输</span>
+                            </div>
+                            <div class="cargo-info">
+                                <span class="cargo-type">食品饮料</span>
+                                <span class="cargo-weight">15吨</span>
+                            </div>
+                            <div class="time-info">
+                                <span class="pickup-time">装货时间: 2024-04-18</span>
+                                <span class="delivery-time">预计到达: 2024-04-19</span>
+                            </div>
+                            <div class="shipper-info">
+                                <span class="shipper-name">梧州食品有限公司</span>
+                                <span class="contact-phone">136****5432</span>
+                            </div>
+                        </div>
+                        <div class="freight-price">
+                            <span class="price-amount">¥2,800</span>
+                            <span class="price-unit">/吨</span>
+                        </div>
+                        <div class="freight-actions">
+                            <button class="btn-bid">参与竞价</button>
+                        </div>
+                    </div>
+
+                    <!-- 货源列表项 5 -->
+                    <div class="freight-item">
+                        <div class="freight-info">
+                            <div class="route-info">
+                                <h3 class="freight-route">梧州港 → 东莞港</h3>
+                                <span class="transport-type">多式联运</span>
+                            </div>
+                            <div class="cargo-info">
+                                <span class="cargo-type">机械设备</span>
+                                <span class="cargo-weight">25吨</span>
+                            </div>
+                            <div class="time-info">
+                                <span class="pickup-time">装货时间: 2024-04-19</span>
+                                <span class="delivery-time">预计到达: 2024-04-22</span>
+                            </div>
+                            <div class="shipper-info">
+                                <span class="shipper-name">梧州机械制造有限公司</span>
+                                <span class="contact-phone">135****6789</span>
+                            </div>
+                        </div>
+                        <div class="freight-price">
+                            <span class="price-amount">¥4,500</span>
+                            <span class="price-unit">/吨</span>
+                        </div>
+                        <div class="freight-actions">
+                            <button class="btn-bid">参与竞价</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 分页 -->
+                <div class="pagination">
+                    <button class="page-btn prev">上一页</button>
+                    <div class="page-numbers">
+                        <button class="page-btn active">1</button>
+                        <button class="page-btn">2</button>
+                        <button class="page-btn">3</button>
+                        <span class="page-ellipsis">...</span>
+                        <button class="page-btn">16</button>
+                    </div>
+                    <button class="page-btn next">下一页</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- 登录模态框 -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>用户登录</h2>
+            <form class="login-form">
+                <div class="form-group">
+                    <label for="username">用户名</label>
+                    <input type="text" id="username" name="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">密码</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <button type="submit" class="btn btn-primary">登录</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- 注册模态框 -->
+    <div id="registerModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>用户注册</h2>
+            <form class="register-form">
+                <div class="form-group">
+                    <label for="reg-username">用户名</label>
+                    <input type="text" id="reg-username" name="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="reg-email">邮箱</label>
+                    <input type="email" id="reg-email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="reg-password">密码</label>
+                    <input type="password" id="reg-password" name="password" required>
+                </div>
+                <div class="form-group">
+                    <label for="reg-confirm-password">确认密码</label>
+                    <input type="password" id="reg-confirm-password" name="confirm-password" required>
+                </div>
+                <button type="submit" class="btn btn-primary">注册</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
+    <script>
+        // 搜索功能
+        function performSearch() {
+            const searchInput = document.getElementById('searchInput');
+            const searchTerm = searchInput.value.trim();
+            
+            if (searchTerm === '') {
+                alert('请输入搜索关键词');
+                searchInput.focus();
+                return;
+            }
+            
+            console.log('搜索关键词：', searchTerm);
+            alert('搜索功能正常！\n搜索关键词：' + searchTerm);
+            
+            // 这里可以添加实际的搜索逻辑
+            // filterFreightList(searchTerm);
+        }
+        
+        // 回车键搜索
+        document.getElementById('searchInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                performSearch();
+            }
+        });
+        
+        // 测试搜索框是否可以获得焦点
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchInput = document.getElementById('searchInput');
+            
+            // 添加焦点事件监听
+            searchInput.addEventListener('focus', function() {
+                console.log('搜索框获得焦点 ✅');
+            });
+            
+            searchInput.addEventListener('blur', function() {
+                console.log('搜索框失去焦点');
+            });
+            
+            searchInput.addEventListener('input', function(e) {
+                console.log('用户输入：', e.target.value);
+            });
+            
+            // 3秒后自动测试焦点
+            setTimeout(function() {
+                console.log('自动测试搜索框焦点...');
+                searchInput.focus();
+                setTimeout(() => searchInput.blur(), 1000);
+            }, 3000);
+        });
+
+        // ================================
+        // 热门路线轮播功能
+        // ================================
+        document.addEventListener('DOMContentLoaded', function() {
+            const sliderTrack = document.querySelector('.slider-track');
+            const prevBtn = document.querySelector('.prev-btn');
+            const nextBtn = document.querySelector('.next-btn');
+            const routeCards = document.querySelectorAll('.route-card');
+            
+            if (!sliderTrack || !prevBtn || !nextBtn || routeCards.length === 0) {
+                console.warn('轮播组件元素未找到');
+                return;
+            }
+            
+            // 计算单次滚动距离
+            const cardWidth = routeCards[0].offsetWidth;
+            const gap = 24; // CSS中设置的gap值
+            const scrollAmount = cardWidth + gap;
+            
+            // 向右滚动（下一个）
+            nextBtn.addEventListener('click', function() {
+                sliderTrack.scrollLeft += scrollAmount;
+            });
+            
+            // 向左滚动（上一个）
+            prevBtn.addEventListener('click', function() {
+                sliderTrack.scrollLeft -= scrollAmount;
+            });
+            
+            // 检测滚动位置，控制按钮状态
+            function updateButtonStates() {
+                const maxScrollLeft = sliderTrack.scrollWidth - sliderTrack.clientWidth;
+                
+                // 更新按钮透明度
+                if (sliderTrack.scrollLeft <= 0) {
+                    prevBtn.style.opacity = '0.5';
+                    prevBtn.style.cursor = 'not-allowed';
+                } else {
+                    prevBtn.style.opacity = '1';
+                    prevBtn.style.cursor = 'pointer';
+                }
+                
+                if (sliderTrack.scrollLeft >= maxScrollLeft - 1) {
+                    nextBtn.style.opacity = '0.5';
+                    nextBtn.style.cursor = 'not-allowed';
+                } else {
+                    nextBtn.style.opacity = '1';
+                    nextBtn.style.cursor = 'pointer';
+                }
+            }
+            
+            // 监听滚动事件
+            sliderTrack.addEventListener('scroll', updateButtonStates);
+            
+            // 初始化按钮状态
+            updateButtonStates();
+            
+            // 窗口大小改变时重新计算
+            window.addEventListener('resize', function() {
+                updateButtonStates();
+            });
+            
+            // 支持键盘导航
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'ArrowLeft') {
+                    prevBtn.click();
+                } else if (e.key === 'ArrowRight') {
+                    nextBtn.click();
+                }
+            });
+        });
+    </script>
+</body>
+</html>

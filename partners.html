@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>合作伙伴 - 梧州市多式联运供应链信息平台</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+    <!-- 顶部导航栏 -->
+    <header class="header">
+        <nav class="nav-container">
+            <div class="nav-logo">
+                <img src="images/企业logo.png" alt="梧州港Logo" class="logo-img">
+                <span class="logo-text">梧州市多式联运供应链信息平台</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-item">首页</a></li>
+                <li><a href="logistics-tracking.html" class="nav-item">物流跟踪</a></li>
+                <li><a href="freight-matching.html" class="nav-item">货运撮合</a></li>
+                <li><a href="policy-benefits.html" class="nav-item">政策惠企</a></li>
+                <li><a href="news.html" class="nav-item">新闻</a></li>
+                <li><a href="partners.html" class="nav-item active">合作伙伴</a></li>
+            </ul>
+            <div class="auth-buttons">
+                <button class="btn-login" onclick="openLoginModal()">登录</button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- 主要内容区域 -->
+    <main class="main-content">
+        <div class="container">
+            <!-- 页面标题 -->
+            <section class="page-header">
+                <h1>合作伙伴</h1>
+                <p>携手共建西江黄金水道，共创美好未来</p>
+            </section>
+
+            <!-- 合作概述 -->
+            <section class="cooperation-overview">
+                <div class="overview-content">
+                    <h2>合作共赢，共谋发展</h2>
+                    <p>梧州市港务发展集团始终坚持开放合作的理念，与各行业领军企业建立了深度战略合作关系。我们携手央企、国企、民企等各类优质合作伙伴，在港口建设、物流运营、技术创新、资源整合等领域深化合作，构建互利共赢的合作生态圈，共同推动西江黄金水道和梧州港的高质量发展。</p>
+                </div>
+            </section>
+
+            <!-- 合作伙伴分类 -->
+            <section class="partner-categories">
+                <div class="category-nav">
+                    <button class="category-btn active" data-category="all">全部合作伙伴</button>
+                    <button class="category-btn" data-category="government">政府机构</button>
+                    <button class="category-btn" data-category="enterprise">央企国企</button>
+                    <button class="category-btn" data-category="logistics">物流企业</button>
+                    <button class="category-btn" data-category="finance">金融机构</button>
+                    <button class="category-btn" data-category="tech">科技公司</button>
+                </div>
+            </section>
+
+            <!-- 核心合作伙伴 -->
+            <section class="core-partners">
+                <h2>核心合作伙伴</h2>
+                <div class="partner-showcase">
+                    <div class="partner-highlight" data-category="enterprise">
+                        <div class="partner-logo">
+                            <img src="images/合作企业.png" alt="中交集团" />
+                        </div>
+                        <div class="partner-info">
+                            <h3>中国交通建设集团</h3>
+                            <span class="partner-type">央企合作伙伴</span>
+                            <p>在港口基础设施建设、码头运营管理、智慧港口建设等领域开展全面战略合作，共同打造世界一流的内河港口。</p>
+                            <div class="cooperation-areas">
+                                <span class="area-tag">基础建设</span>
+                                <span class="area-tag">运营管理</span>
+                                <span class="area-tag">技术创新</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 合作伙伴展示 -->
+            <section class="partners-grid-section">
+                <h2>合作伙伴展示</h2>
+                <div class="partners-grid" id="partnersGrid">
+                    <!-- 政府机构 -->
+                    <div class="partner-card" data-category="government">
+                        <div class="partner-logo">
+                            <div class="logo-placeholder government">梧州市政府</div>
+                        </div>
+                        <div class="partner-content">
+                            <h3>梧州市人民政府</h3>
+                            <span class="partner-type">政府机构</span>
+                            <p>政策支持、规划指导、协调发展</p>
+                        </div>
+                    </div>
+
+                    <div class="partner-card" data-category="government">
+                        <div class="partner-logo">
+                            <div class="logo-placeholder government">广西交通厅</div>
+                        </div>
+                        <div class="partner-content">
+                            <h3>广西壮族自治区交通运输厅</h3>
+                            <span class="partner-type">政府机构</span>
+                            <p>交通规划、政策制定、项目审批</p>
+                        </div>
+                    </div>
+
+                    <!-- 央企国企 -->
+                    <div class="partner-card" data-category="enterprise">
+                        <div class="partner-logo">
+                            <img src="images/合作企业logo2.png" alt="招商局集团" />
+                        </div>
+                        <div class="partner-content">
+                            <h3>招商局集团</h3>
+                            <span class="partner-type">央企</span>
+                            <p>港口投资、运营管理、供应链服务</p>
+                        </div>
+                    </div>
+
+                    <div class="partner-card" data-category="enterprise">
+                        <div class="partner-logo">
+                            <img src="images/合作企业logo3.png" alt="中远海运" />
+                        </div>
+                        <div class="partner-content">
+                            <h3>中远海运集团</h3>
+                            <span class="partner-type">央企</span>
+                            <p>航运服务、物流配送、船舶代理</p>
+                        </div>
+                    </div>
+
+                    <!-- 物流企业 -->
+                    <div class="partner-card" data-category="logistics">
+                        <div class="partner-logo">
+                            <img src="images/合作企业logo4.png" alt="顺丰速运" />
+                        </div>
+                        <div class="partner-content">
+                            <h3>顺丰控股</h3>
+                            <span class="partner-type">物流企业</span>
+                            <p>快递配送、仓储服务、供应链管理</p>
+                        </div>
+                    </div>
+
+                    <div class="partner-card" data-category="logistics">
+                        <div class="partner-logo">
+                            <img src="images/合作企业logo5.png" alt="京东物流" />
+                        </div>
+                        <div class="partner-content">
+                            <h3>京东物流</h3>
+                            <span class="partner-type">物流企业</span>
+                            <p>智慧物流、配送网络、仓储管理</p>
+                        </div>
+                    </div>
+
+                    <!-- 金融机构 -->
+                    <div class="partner-card" data-category="finance">
+                        <div class="partner-logo">
+                            <div class="logo-placeholder finance">中国银行</div>
+                        </div>
+                        <div class="partner-content">
+                            <h3>中国银行</h3>
+                            <span class="partner-type">金融机构</span>
+                            <p>项目融资、供应链金融、贸易金融</p>
+                        </div>
+                    </div>
+
+                    <div class="partner-card" data-category="finance">
+                        <div class="partner-logo">
+                            <div class="logo-placeholder finance">工商银行</div>
+                        </div>
+                        <div class="partner-content">
+                            <h3>中国工商银行</h3>
+                            <span class="partner-type">金融机构</span>
+                            <p>综合金融服务、资金结算、风险管控</p>
+                        </div>
+                    </div>
+
+                    <!-- 科技公司 -->
+                    <div class="partner-card" data-category="tech">
+                        <div class="partner-logo">
+                            <div class="logo-placeholder tech">华为</div>
+                        </div>
+                        <div class="partner-content">
+                            <h3>华为技术有限公司</h3>
+                            <span class="partner-type">科技公司</span>
+                            <p>5G网络、云计算、智慧港口解决方案</p>
+                        </div>
+                    </div>
+
+                    <div class="partner-card" data-category="tech">
+                        <div class="partner-logo">
+                            <div class="logo-placeholder tech">阿里云</div>
+                        </div>
+                        <div class="partner-content">
+                            <h3>阿里云计算</h3>
+                            <span class="partner-type">科技公司</span>
+                            <p>云计算服务、大数据分析、AI技术</p>
+                        </div>
+                    </div>
+
+                    <div class="partner-card" data-category="logistics">
+                        <div class="partner-logo">
+                            <div class="logo-placeholder logistics">中外运</div>
+                        </div>
+                        <div class="partner-content">
+                            <h3>中国外运股份有限公司</h3>
+                            <span class="partner-type">物流企业</span>
+                            <p>国际物流、货运代理、报关报检</p>
+                        </div>
+                    </div>
+
+                    <div class="partner-card" data-category="enterprise">
+                        <div class="partner-logo">
+                            <div class="logo-placeholder enterprise">广西北港</div>
+                        </div>
+                        <div class="partner-content">
+                            <h3>广西北部湾港集团</h3>
+                            <span class="partner-type">国企</span>
+                            <p>港口联盟、资源共享、协同发展</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 合作成果 -->
+            <section class="cooperation-results">
+                <h2>合作成果</h2>
+                <div class="results-grid">
+                    <div class="result-card">
+                        <div class="result-icon">🚢</div>
+                        <h3>港口建设</h3>
+                        <div class="result-number">15+</div>
+                        <p>个重大港口建设项目</p>
+                    </div>
+                    <div class="result-card">
+                        <div class="result-icon">🔗</div>
+                        <h3>物流网络</h3>
+                        <div class="result-number">200+</div>
+                        <p>家物流合作企业</p>
+                    </div>
+                    <div class="result-card">
+                        <div class="result-icon">💰</div>
+                        <h3>投资规模</h3>
+                        <div class="result-number">100亿+</div>
+                        <p>元总投资金额</p>
+                    </div>
+                    <div class="result-card">
+                        <div class="result-icon">🌐</div>
+                        <h3>服务覆盖</h3>
+                        <div class="result-number">50+</div>
+                        <p>个城市和地区</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 合作申请 -->
+            <section class="cooperation-application">
+                <div class="application-container">
+                    <h2>加入我们的合作伙伴</h2>
+                    <p>如果您希望与梧州港务发展集团建立合作关系，欢迎联系我们</p>
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <h3>商务合作</h3>
+                            <p>📞 0774-3820100</p>
+                            <p>📧 business@wzport.com</p>
+                        </div>
+                        <div class="contact-item">
+                            <h3>投资合作</h3>
+                            <p>📞 0774-3820200</p>
+                            <p>📧 investment@wzport.com</p>
+                        </div>
+                        <div class="contact-item">
+                            <h3>技术合作</h3>
+                            <p>📞 0774-3820300</p>
+                            <p>📧 tech@wzport.com</p>
+                        </div>
+                    </div>
+                    <button class="btn-cooperation" onclick="applyCooperation()">申请合作</button>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 梧州市港务发展集团有限公司. 保留所有权利.</p>
+        </div>
+    </footer>
+
+    <script>
+        // 合作伙伴分类筛选
+        document.querySelectorAll('.category-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                // 移除所有活跃状态
+                document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
+                // 添加当前活跃状态
+                this.classList.add('active');
+                
+                const category = this.dataset.category;
+                const cards = document.querySelectorAll('.partner-card');
+                
+                cards.forEach(card => {
+                    if (category === 'all' || card.dataset.category === category) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        // 申请合作功能
+        function applyCooperation() {
+            alert('合作申请功能开发中...\n请直接联系我们的商务团队');
+        }
+
+        // 登录模态框功能
+        function openLoginModal() {
+            alert('登录功能开发中...');
+        }
+    </script>
+
+    <style>
+        /* 合作伙伴页面特有样式 */
+        .page-header {
+            text-align: center;
+            padding: 60px 0 40px;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            margin-bottom: 40px;
+        }
+
+        .page-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .page-header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .cooperation-overview {
+            margin-bottom: 60px;
+            text-align: center;
+        }
+
+        .overview-content {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .overview-content h2 {
+            color: #1e3c72;
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        .overview-content p {
+            color: #666;
+            line-height: 1.8;
+            font-size: 1.1rem;
+        }
+
+        .partner-categories {
+            margin-bottom: 40px;
+        }
+
+        .category-nav {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .category-btn {
+            padding: 12px 24px;
+            border: 2px solid #e0e0e0;
+            background: white;
+            color: #666;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .category-btn.active,
+        .category-btn:hover {
+            background: #1e3c72;
+            color: white;
+            border-color: #1e3c72;
+        }
+
+        .core-partners {
+            margin-bottom: 60px;
+        }
+
+        .core-partners h2 {
+            color: #1e3c72;
+            font-size: 2rem;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .partner-showcase {
+            background: white;
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .partner-highlight {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+        }
+
+        .partner-highlight .partner-logo {
+            width: 200px;
+            height: 120px;
+            flex-shrink: 0;
+        }
+
+        .partner-highlight .partner-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .partner-info h3 {
+            color: #1e3c72;
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+
+        .partner-type {
+            color: #666;
+            background: #f0f0f0;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 0.9rem;
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+
+        .partner-info p {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .cooperation-areas {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .area-tag {
+            background: #1e3c72;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 15px;
+            font-size: 0.85rem;
+        }
+
+        .partners-grid-section {
+            margin-bottom: 60px;
+        }
+
+        .partners-grid-section h2 {
+            color: #1e3c72;
+            font-size: 2rem;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .partners-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .partner-card {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .partner-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+        }
+
+        .partner-card .partner-logo {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .partner-card .partner-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .logo-placeholder {
+            width: 80px;
+            height: 80px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-align: center;
+        }
+
+        .logo-placeholder.government {
+            background: #28a745;
+        }
+
+        .logo-placeholder.enterprise {
+            background: #dc3545;
+        }
+
+        .logo-placeholder.logistics {
+            background: #007bff;
+        }
+
+        .logo-placeholder.finance {
+            background: #ffc107;
+            color: #333;
+        }
+
+        .logo-placeholder.tech {
+            background: #6f42c1;
+        }
+
+        .partner-content h3 {
+            color: #1e3c72;
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+        }
+
+        .partner-content .partner-type {
+            background: #f0f0f0;
+            color: #666;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            display: inline-block;
+            margin-bottom: 12px;
+        }
+
+        .partner-content p {
+            color: #666;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .cooperation-results {
+            margin-bottom: 60px;
+        }
+
+        .cooperation-results h2 {
+            color: #1e3c72;
+            font-size: 2rem;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+        }
+
+        .result-card {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .result-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .result-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+
+        .result-card h3 {
+            color: #1e3c72;
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+
+        .result-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #1e3c72;
+            margin-bottom: 5px;
+        }
+
+        .result-card p {
+            color: #666;
+        }
+
+        .cooperation-application {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            border-radius: 12px;
+            padding: 60px 40px;
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+        }
+
+        .application-container h2 {
+            font-size: 2.2rem;
+            margin-bottom: 15px;
+        }
+
+        .application-container > p {
+            font-size: 1.1rem;
+            margin-bottom: 40px;
+            opacity: 0.9;
+        }
+
+        .contact-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .contact-item {
+            background: rgba(255,255,255,0.1);
+            padding: 25px;
+            border-radius: 12px;
+        }
+
+        .contact-item h3 {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+        }
+
+        .contact-item p {
+            margin-bottom: 8px;
+            opacity: 0.9;
+        }
+
+        .btn-cooperation {
+            background: white;
+            color: #1e3c72;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-cooperation:hover {
+            background: #f0f0f0;
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 768px) {
+            .partner-highlight {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .partner-highlight .partner-logo {
+                width: 120px;
+                height: 80px;
+            }
+            
+            .category-nav {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .partners-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .cooperation-application {
+                padding: 40px 20px;
+            }
+        }
+    </style>
+</body>
+</html>

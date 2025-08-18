@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>政策惠企 - 梧州市多式联运供应链信息平台</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+    <!-- 顶部导航栏 -->
+    <header class="header">
+        <nav class="nav-container">
+            <div class="nav-logo">
+                <img src="images/企业logo.png" alt="梧州港Logo" class="logo-img">
+                <span class="logo-text">梧州市多式联运供应链信息平台</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-item">首页</a></li>
+                <li><a href="logistics-tracking.html" class="nav-item">物流跟踪</a></li>
+                <li><a href="freight-matching.html" class="nav-item">货运撮合</a></li>
+                <li><a href="policy-benefits.html" class="nav-item active">政策惠企</a></li>
+                <li><a href="news.html" class="nav-item">新闻</a></li>
+                <li><a href="partners.html" class="nav-item">合作伙伴</a></li>
+            </ul>
+            <div class="auth-buttons">
+                <button class="btn-login" onclick="openLoginModal()">登录</button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- 主要内容区域 -->
+    <main class="main-content">
+        <div class="container">
+            <!-- 页面标题 -->
+            <section class="page-header">
+                <h1>政策惠企</h1>
+                <p>汇聚最新政策信息，助力企业降本增效</p>
+            </section>
+
+            <!-- 政策分类导航 -->
+            <section class="policy-nav">
+                <div class="nav-tabs">
+                    <button class="policy-tab active" data-category="all">全部政策</button>
+                    <button class="policy-tab" data-category="tax">税收优惠</button>
+                    <button class="policy-tab" data-category="logistics">物流补贴</button>
+                    <button class="policy-tab" data-category="financing">融资支持</button>
+                    <button class="policy-tab" data-category="tech">科技创新</button>
+                </div>
+            </section>
+
+            <!-- 政策列表 -->
+            <section class="policy-list">
+                <div class="policy-grid" id="policyGrid">
+                    <!-- 税收优惠政策 -->
+                    <div class="policy-card" data-category="tax">
+                        <div class="policy-header">
+                            <span class="policy-tag tax">税收优惠</span>
+                            <span class="policy-date">2024-01-10</span>
+                        </div>
+                        <h3>港口物流企业税收减免政策</h3>
+                        <p>对符合条件的港口物流企业，减按15%税率征收企业所得税，有效期至2025年12月31日。</p>
+                        <div class="policy-details">
+                            <span class="benefit">💰 最高减免30%</span>
+                            <button class="btn-detail" onclick="showPolicyDetail('tax-1')">查看详情</button>
+                        </div>
+                    </div>
+
+                    <!-- 物流补贴政策 -->
+                    <div class="policy-card" data-category="logistics">
+                        <div class="policy-header">
+                            <span class="policy-tag logistics">物流补贴</span>
+                            <span class="policy-date">2024-01-08</span>
+                        </div>
+                        <h3>多式联运运输补贴实施办法</h3>
+                        <p>对采用"水公铁"多式联运的货运企业，按实际运输量给予每吨50-100元的运输补贴。</p>
+                        <div class="policy-details">
+                            <span class="benefit">💰 最高100元/吨</span>
+                            <button class="btn-detail" onclick="showPolicyDetail('logistics-1')">查看详情</button>
+                        </div>
+                    </div>
+
+                    <!-- 融资支持政策 -->
+                    <div class="policy-card" data-category="financing">
+                        <div class="policy-header">
+                            <span class="policy-tag financing">融资支持</span>
+                            <span class="policy-date">2024-01-05</span>
+                        </div>
+                        <h3>港口物流企业贷款贴息政策</h3>
+                        <p>对港口物流重点项目建设贷款，政府给予年度贷款利息50%的贴息支持，单个项目最高500万元。</p>
+                        <div class="policy-details">
+                            <span class="benefit">💰 最高500万贴息</span>
+                            <button class="btn-detail" onclick="showPolicyDetail('financing-1')">查看详情</button>
+                        </div>
+                    </div>
+
+                    <!-- 科技创新政策 -->
+                    <div class="policy-card" data-category="tech">
+                        <div class="policy-header">
+                            <span class="policy-tag tech">科技创新</span>
+                            <span class="policy-date">2024-01-03</span>
+                        </div>
+                        <h3>智慧物流技术改造奖励政策</h3>
+                        <p>对投资智慧物流、数字化改造项目的企业，按实际投资额的20%给予奖励，最高300万元。</p>
+                        <div class="policy-details">
+                            <span class="benefit">💰 最高300万奖励</span>
+                            <button class="btn-detail" onclick="showPolicyDetail('tech-1')">查看详情</button>
+                        </div>
+                    </div>
+
+                    <!-- 更多政策卡片 -->
+                    <div class="policy-card" data-category="tax">
+                        <div class="policy-header">
+                            <span class="policy-tag tax">税收优惠</span>
+                            <span class="policy-date">2023-12-28</span>
+                        </div>
+                        <h3>小微物流企业增值税优惠政策</h3>
+                        <p>月销售额15万元以下的小微物流企业免征增值税，促进小微企业健康发展。</p>
+                        <div class="policy-details">
+                            <span class="benefit">💰 免征增值税</span>
+                            <button class="btn-detail" onclick="showPolicyDetail('tax-2')">查看详情</button>
+                        </div>
+                    </div>
+
+                    <div class="policy-card" data-category="logistics">
+                        <div class="policy-header">
+                            <span class="policy-tag logistics">物流补贴</span>
+                            <span class="policy-date">2023-12-25</span>
+                        </div>
+                        <h3>绿色物流发展专项资金</h3>
+                        <p>支持新能源货运车辆购置、充电桩建设等绿色物流项目，单个项目补贴不超过投资额的40%。</p>
+                        <div class="policy-details">
+                            <span class="benefit">💰 最高40%补贴</span>
+                            <button class="btn-detail" onclick="showPolicyDetail('logistics-2')">查看详情</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 申请指南 -->
+            <section class="application-guide">
+                <h2>申请指南</h2>
+                <div class="guide-steps">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <h3>了解政策</h3>
+                        <p>详细阅读政策内容，确认申请条件和要求</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <h3>准备材料</h3>
+                        <p>按照要求准备相关申请材料和证明文件</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <h3>在线申请</h3>
+                        <p>通过政务服务平台在线提交申请材料</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">4</div>
+                        <h3>审核反馈</h3>
+                        <p>相关部门审核并及时反馈审核结果</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 联系咨询 -->
+            <section class="contact-section">
+                <h2>政策咨询</h2>
+                <div class="contact-grid">
+                    <div class="contact-card">
+                        <h3>税收政策咨询</h3>
+                        <p>📞 咨询电话：0774-3820001</p>
+                        <p>⏰ 工作时间：周一至周五 9:00-17:00</p>
+                    </div>
+                    <div class="contact-card">
+                        <h3>物流补贴咨询</h3>
+                        <p>📞 咨询电话：0774-3820002</p>
+                        <p>⏰ 工作时间：周一至周五 9:00-17:00</p>
+                    </div>
+                    <div class="contact-card">
+                        <h3>融资政策咨询</h3>
+                        <p>📞 咨询电话：0774-3820003</p>
+                        <p>⏰ 工作时间：周一至周五 9:00-17:00</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 梧州市港务发展集团有限公司. 保留所有权利.</p>
+        </div>
+    </footer>
+
+    <script>
+        // 政策分类筛选
+        document.querySelectorAll('.policy-tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                // 移除所有活跃状态
+                document.querySelectorAll('.policy-tab').forEach(t => t.classList.remove('active'));
+                // 添加当前活跃状态
+                this.classList.add('active');
+                
+                const category = this.dataset.category;
+                const cards = document.querySelectorAll('.policy-card');
+                
+                cards.forEach(card => {
+                    if (category === 'all' || card.dataset.category === category) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        // 显示政策详情
+        function showPolicyDetail(policyId) {
+            // 这里可以实现弹窗显示详情或跳转到详情页面
+            alert('政策详情功能开发中...\n政策ID: ' + policyId);
+        }
+
+        // 登录模态框功能
+        function openLoginModal() {
+            alert('登录功能开发中...');
+        }
+    </script>
+
+    <style>
+        /* 政策惠企页面特有样式 */
+        .page-header {
+            text-align: center;
+            padding: 60px 0 40px;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            margin-bottom: 40px;
+        }
+
+        .page-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .page-header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .policy-nav {
+            margin-bottom: 40px;
+        }
+
+        .nav-tabs {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .policy-tab {
+            padding: 12px 24px;
+            border: 2px solid #e0e0e0;
+            background: white;
+            color: #666;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .policy-tab.active,
+        .policy-tab:hover {
+            background: #1e3c72;
+            color: white;
+            border-color: #1e3c72;
+        }
+
+        .policy-list {
+            margin-bottom: 60px;
+        }
+
+        .policy-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+        }
+
+        .policy-card {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .policy-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+        }
+
+        .policy-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .policy-tag {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: white;
+        }
+
+        .policy-tag.tax {
+            background: #28a745;
+        }
+
+        .policy-tag.logistics {
+            background: #007bff;
+        }
+
+        .policy-tag.financing {
+            background: #ffc107;
+            color: #333;
+        }
+
+        .policy-tag.tech {
+            background: #6f42c1;
+        }
+
+        .policy-date {
+            color: #999;
+            font-size: 0.9rem;
+        }
+
+        .policy-card h3 {
+            color: #1e3c72;
+            margin-bottom: 12px;
+            font-size: 1.2rem;
+            line-height: 1.4;
+        }
+
+        .policy-card p {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .policy-details {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .benefit {
+            color: #28a745;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .btn-detail {
+            padding: 8px 16px;
+            background: #1e3c72;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: background 0.3s ease;
+        }
+
+        .btn-detail:hover {
+            background: #2a5298;
+        }
+
+        .application-guide {
+            margin-bottom: 60px;
+        }
+
+        .application-guide h2 {
+            text-align: center;
+            color: #1e3c72;
+            margin-bottom: 40px;
+            font-size: 2rem;
+        }
+
+        .guide-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+        }
+
+        .step {
+            text-align: center;
+            background: white;
+            padding: 30px 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .step-number {
+            width: 50px;
+            height: 50px;
+            background: #1e3c72;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin: 0 auto 20px;
+        }
+
+        .step h3 {
+            color: #1e3c72;
+            margin-bottom: 12px;
+            font-size: 1.3rem;
+        }
+
+        .step p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .contact-section {
+            margin-bottom: 40px;
+        }
+
+        .contact-section h2 {
+            text-align: center;
+            color: #1e3c72;
+            margin-bottom: 40px;
+            font-size: 2rem;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .contact-card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .contact-card h3 {
+            color: #1e3c72;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+
+        .contact-card p {
+            color: #666;
+            margin-bottom: 8px;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 768px) {
+            .nav-tabs {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .policy-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .guide-steps {
+                grid-template-columns: 1fr;
+            }
+            
+            .policy-details {
+                flex-direction: column;
+                gap: 10px;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</body>
+</html>

@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>新闻中心 - 梧州市多式联运供应链信息平台</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+    <!-- 顶部导航栏 -->
+    <header class="header">
+        <nav class="nav-container">
+            <div class="nav-logo">
+                <img src="images/企业logo.png" alt="梧州港Logo" class="logo-img">
+                <span class="logo-text">梧州市多式联运供应链信息平台</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-item">首页</a></li>
+                <li><a href="logistics-tracking.html" class="nav-item">物流跟踪</a></li>
+                <li><a href="freight-matching.html" class="nav-item">货运撮合</a></li>
+                <li><a href="policy-benefits.html" class="nav-item">政策惠企</a></li>
+                <li><a href="news.html" class="nav-item active">新闻</a></li>
+                <li><a href="partners.html" class="nav-item">合作伙伴</a></li>
+            </ul>
+            <div class="auth-buttons">
+                <button class="btn-login" onclick="openLoginModal()">登录</button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- 主要内容区域 -->
+    <main class="main-content">
+        <div class="container">
+            <!-- 页面标题 -->
+            <section class="page-header">
+                <h1>新闻中心</h1>
+                <p>及时了解港口动态和行业资讯</p>
+            </section>
+
+            <!-- 新闻分类导航 -->
+            <section class="news-nav">
+                <div class="nav-tabs">
+                    <button class="news-tab active" data-category="all">全部新闻</button>
+                    <button class="news-tab" data-category="company">企业动态</button>
+                    <button class="news-tab" data-category="industry">行业资讯</button>
+                    <button class="news-tab" data-category="policy">政策解读</button>
+                    <button class="news-tab" data-category="project">项目进展</button>
+                </div>
+            </section>
+
+            <!-- 热点新闻 -->
+            <section class="featured-news">
+                <h2>热点新闻</h2>
+                <div class="featured-grid">
+                    <div class="featured-main">
+                        <div class="news-image">
+                            <img src="images/轮播banner图.png" alt="梧州港建设" />
+                            <div class="news-overlay">
+                                <span class="news-category">企业动态</span>
+                            </div>
+                        </div>
+                        <div class="news-content">
+                            <h3>梧州港亿吨港口建设项目取得重大进展</h3>
+                            <p>梧州市港务发展集团全力推进亿吨西江门户枢纽港建设，项目建设取得重大突破，预计年底前完成一期工程...</p>
+                            <div class="news-meta">
+                                <span class="news-date">2024-01-15</span>
+                                <span class="news-views">👁 1,258</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="featured-side">
+                        <div class="side-news-item">
+                            <div class="side-news-image">
+                                <img src="images/企业介绍配图.png" alt="智慧物流" />
+                            </div>
+                            <div class="side-news-content">
+                                <span class="news-category">行业资讯</span>
+                                <h4>智慧物流平台正式上线运营</h4>
+                                <span class="news-date">2024-01-12</span>
+                            </div>
+                        </div>
+                        
+                        <div class="side-news-item">
+                            <div class="side-news-image">
+                                <img src="images/企业介绍配图2.png" alt="多式联运" />
+                            </div>
+                            <div class="side-news-content">
+                                <span class="news-category">政策解读</span>
+                                <h4>多式联运补贴政策详细解读</h4>
+                                <span class="news-date">2024-01-10</span>
+                            </div>
+                        </div>
+                        
+                        <div class="side-news-item">
+                            <div class="side-news-image">
+                                <img src="images/企业介绍配图4.png" alt="绿色港口" />
+                            </div>
+                            <div class="side-news-content">
+                                <span class="news-category">项目进展</span>
+                                <h4>绿色港口示范项目启动建设</h4>
+                                <span class="news-date">2024-01-08</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 新闻列表 -->
+            <section class="news-list">
+                <h2>最新动态</h2>
+                <div class="news-grid" id="newsGrid">
+                    <!-- 企业动态 -->
+                    <article class="news-card" data-category="company">
+                        <div class="news-image">
+                            <img src="images/轮播banner图2.png" alt="港口建设" />
+                            <span class="news-category-tag company">企业动态</span>
+                        </div>
+                        <div class="news-content">
+                            <h3>梧州港务集团与央企签署战略合作协议</h3>
+                            <p>1月13日，梧州市港务发展集团与中交集团签署战略合作协议，双方将在港口建设、物流运营等领域深化合作...</p>
+                            <div class="news-footer">
+                                <span class="news-date">📅 2024-01-13</span>
+                                <span class="news-author">📝 企业新闻部</span>
+                                <button class="btn-read-more" onclick="readMore('news-1')">阅读全文</button>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- 行业资讯 -->
+                    <article class="news-card" data-category="industry">
+                        <div class="news-image">
+                            <img src="images/企业配图3.png" alt="行业发展" />
+                            <span class="news-category-tag industry">行业资讯</span>
+                        </div>
+                        <div class="news-content">
+                            <h3>2024年内河航运发展趋势分析</h3>
+                            <p>随着西江黄金水道建设的深入推进，内河航运迎来新的发展机遇，多式联运、智慧物流成为发展重点...</p>
+                            <div class="news-footer">
+                                <span class="news-date">📅 2024-01-11</span>
+                                <span class="news-author">📝 行业研究</span>
+                                <button class="btn-read-more" onclick="readMore('news-2')">阅读全文</button>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- 政策解读 -->
+                    <article class="news-card" data-category="policy">
+                        <div class="news-image">
+                            <img src="images/企业介绍配图.png" alt="政策文件" />
+                            <span class="news-category-tag policy">政策解读</span>
+                        </div>
+                        <div class="news-content">
+                            <h3>广西壮族自治区港口发展规划(2024-2030)</h3>
+                            <p>自治区发布港口发展规划，明确提出建设北部湾国际门户港和西江内河枢纽港，梧州港被列为重点发展港口...</p>
+                            <div class="news-footer">
+                                <span class="news-date">📅 2024-01-09</span>
+                                <span class="news-author">📝 政策研究</span>
+                                <button class="btn-read-more" onclick="readMore('news-3')">阅读全文</button>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- 项目进展 -->
+                    <article class="news-card" data-category="project">
+                        <div class="news-image">
+                            <img src="images/企业介绍配图2.png" alt="项目建设" />
+                            <span class="news-category-tag project">项目进展</span>
+                        </div>
+                        <div class="news-content">
+                            <h3>智慧港口信息化系统建设进展顺利</h3>
+                            <p>梧州港智慧港口信息化系统建设项目进展顺利，预计3月份完成系统上线，将大幅提升港口运营效率...</p>
+                            <div class="news-footer">
+                                <span class="news-date">📅 2024-01-07</span>
+                                <span class="news-author">📝 项目部</span>
+                                <button class="btn-read-more" onclick="readMore('news-4')">阅读全文</button>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- 更多新闻 -->
+                    <article class="news-card" data-category="company">
+                        <div class="news-image">
+                            <img src="images/企业介绍配图4.png" alt="安全生产" />
+                            <span class="news-category-tag company">企业动态</span>
+                        </div>
+                        <div class="news-content">
+                            <h3>梧州港开展年度安全生产大检查</h3>
+                            <p>为确保港口安全生产，梧州港务集团组织开展年度安全生产大检查，全面排查安全隐患，强化安全管理...</p>
+                            <div class="news-footer">
+                                <span class="news-date">📅 2024-01-05</span>
+                                <span class="news-author">📝 安全部</span>
+                                <button class="btn-read-more" onclick="readMore('news-5')">阅读全文</button>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="news-card" data-category="industry">
+                        <div class="news-image">
+                            <img src="images/合作企业.png" alt="合作发展" />
+                            <span class="news-category-tag industry">行业资讯</span>
+                        </div>
+                        <div class="news-content">
+                            <h3>西江航运一体化发展迎来新机遇</h3>
+                            <p>随着粤港澳大湾区建设深入推进，西江航运一体化发展迎来重大机遇，沿江港口协同发展成为新趋势...</p>
+                            <div class="news-footer">
+                                <span class="news-date">📅 2024-01-03</span>
+                                <span class="news-author">📝 战略研究</span>
+                                <button class="btn-read-more" onclick="readMore('news-6')">阅读全文</button>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+
+                <!-- 分页导航 -->
+                <div class="pagination">
+                    <button class="page-btn" disabled>上一页</button>
+                    <button class="page-btn active">1</button>
+                    <button class="page-btn">2</button>
+                    <button class="page-btn">3</button>
+                    <button class="page-btn">下一页</button>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 梧州市港务发展集团有限公司. 保留所有权利.</p>
+        </div>
+    </footer>
+
+    <script>
+        // 新闻分类筛选
+        document.querySelectorAll('.news-tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                // 移除所有活跃状态
+                document.querySelectorAll('.news-tab').forEach(t => t.classList.remove('active'));
+                // 添加当前活跃状态
+                this.classList.add('active');
+                
+                const category = this.dataset.category;
+                const cards = document.querySelectorAll('.news-card');
+                
+                cards.forEach(card => {
+                    if (category === 'all' || card.dataset.category === category) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        // 阅读全文功能
+        function readMore(newsId) {
+            alert('新闻详情页功能开发中...\n新闻ID: ' + newsId);
+        }
+
+        // 登录模态框功能
+        function openLoginModal() {
+            alert('登录功能开发中...');
+        }
+    </script>
+
+    <style>
+        /* 新闻中心页面特有样式 */
+        .page-header {
+            text-align: center;
+            padding: 60px 0 40px;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            margin-bottom: 40px;
+        }
+
+        .page-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .page-header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .news-nav {
+            margin-bottom: 40px;
+        }
+
+        .nav-tabs {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .news-tab {
+            padding: 12px 24px;
+            border: 2px solid #e0e0e0;
+            background: white;
+            color: #666;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .news-tab.active,
+        .news-tab:hover {
+            background: #1e3c72;
+            color: white;
+            border-color: #1e3c72;
+        }
+
+        .featured-news {
+            margin-bottom: 60px;
+        }
+
+        .featured-news h2 {
+            color: #1e3c72;
+            margin-bottom: 30px;
+            font-size: 1.8rem;
+        }
+
+        .featured-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+        }
+
+        .featured-main {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .featured-main .news-image {
+            position: relative;
+            height: 300px;
+            overflow: hidden;
+        }
+
+        .featured-main .news-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .news-overlay {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+        }
+
+        .news-category {
+            background: rgba(30, 60, 114, 0.9);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+
+        .featured-main .news-content {
+            padding: 25px;
+        }
+
+        .featured-main h3 {
+            color: #1e3c72;
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            line-height: 1.4;
+        }
+
+        .featured-main p {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .news-meta {
+            display: flex;
+            gap: 20px;
+            color: #999;
+            font-size: 0.9rem;
+        }
+
+        .featured-side {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .side-news-item {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            display: flex;
+        }
+
+        .side-news-image {
+            width: 120px;
+            height: 100px;
+            flex-shrink: 0;
+        }
+
+        .side-news-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .side-news-content {
+            padding: 15px;
+            flex: 1;
+        }
+
+        .side-news-content .news-category {
+            font-size: 0.8rem;
+            margin-bottom: 8px;
+        }
+
+        .side-news-content h4 {
+            color: #1e3c72;
+            font-size: 1rem;
+            margin-bottom: 8px;
+            line-height: 1.3;
+        }
+
+        .side-news-content .news-date {
+            color: #999;
+            font-size: 0.8rem;
+        }
+
+        .news-list {
+            margin-bottom: 40px;
+        }
+
+        .news-list h2 {
+            color: #1e3c72;
+            margin-bottom: 30px;
+            font-size: 1.8rem;
+        }
+
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .news-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .news-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+        }
+
+        .news-card .news-image {
+            position: relative;
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .news-card .news-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .news-category-tag {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: white;
+        }
+
+        .news-category-tag.company {
+            background: #28a745;
+        }
+
+        .news-category-tag.industry {
+            background: #007bff;
+        }
+
+        .news-category-tag.policy {
+            background: #ffc107;
+            color: #333;
+        }
+
+        .news-category-tag.project {
+            background: #6f42c1;
+        }
+
+        .news-card .news-content {
+            padding: 20px;
+        }
+
+        .news-card h3 {
+            color: #1e3c72;
+            font-size: 1.2rem;
+            margin-bottom: 12px;
+            line-height: 1.4;
+        }
+
+        .news-card p {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+        }
+
+        .news-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .news-footer span {
+            color: #999;
+            font-size: 0.85rem;
+        }
+
+        .btn-read-more {
+            padding: 6px 12px;
+            background: #1e3c72;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: background 0.3s ease;
+        }
+
+        .btn-read-more:hover {
+            background: #2a5298;
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .page-btn {
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            background: white;
+            color: #666;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .page-btn:hover:not(:disabled) {
+            background: #1e3c72;
+            color: white;
+            border-color: #1e3c72;
+        }
+
+        .page-btn.active {
+            background: #1e3c72;
+            color: white;
+            border-color: #1e3c72;
+        }
+
+        .page-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        @media (max-width: 768px) {
+            .featured-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .side-news-item {
+                flex-direction: column;
+            }
+            
+            .side-news-image {
+                width: 100%;
+                height: 150px;
+            }
+            
+            .news-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .nav-tabs {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</body>
+</html>

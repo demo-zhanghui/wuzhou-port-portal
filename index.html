@@ -9,58 +9,61 @@
     <link rel="stylesheet" href="css/responsive.css">
 </head>
 <body>
-    <!-- 顶部导航栏 -->
+    <!-- 顶部导航栏 - 重新设计 -->
     <header class="header">
         <nav class="nav-container">
-            <div class="logo">
-                <img src="images/企业logo.png" alt="梧州港Logo">
+            <div class="nav-logo">
+                <img src="images/企业logo.png" alt="梧州港Logo" class="logo-img">
+                <span class="logo-text">梧州市多式联运供应链信息平台</span>
             </div>
             <ul class="nav-menu">
-                <li><a href="#home">首页</a></li>
-                <li><a href="#tracking">物流跟踪</a></li>
-                <li><a href="#matching">货运撮合</a></li>
-                <li><a href="#policy">政策惠企</a></li>
-                <li><a href="#news">新闻</a></li>
-                <li><a href="#partners">合作伙伴</a></li>
+                <li><a href="index.html" class="nav-item active">首页</a></li>
+                <li><a href="logistics-tracking.html" class="nav-item">物流跟踪</a></li>
+                <li><a href="freight-matching.html" class="nav-item">货运撮合</a></li>
+                <li><a href="policy-benefits.html" class="nav-item">政策惠企</a></li>
+                <li><a href="news.html" class="nav-item">新闻</a></li>
+                <li><a href="partners.html" class="nav-item">合作伙伴</a></li>
             </ul>
+            <div class="auth-buttons">
+                <button class="btn-login" onclick="openLoginModal()">登录</button>
+            </div>
         </nav>
     </header>
 
-    <!-- 门户首页区 -->
+    <!-- 门户首页区 - 重新设计 -->
     <section class="hero-section" id="home">
-        <div class="hero-slider">
-            <div class="hero-slide active" style="background-image: url('images/轮播banner图.png');">
-                <div class="slide-overlay">
-                    <div class="slide-content">
-                        <h3 class="slide-title">梧州港智慧物流平台</h3>
-                        <p class="slide-subtitle">构建亿吨西江门户枢纽港</p>
-                    </div>
-                </div>
-            </div>
-            <div class="hero-slide" style="background-image: url('images/轮播banner图2.png');">
-                <div class="slide-overlay">
-                    <div class="slide-content">
-                        <h3 class="slide-title">一站式智慧物流服务</h3>
-                        <p class="slide-subtitle">打造梧州市区域性物流综合信息服务平台</p>
-                    </div>
-                </div>
-            </div>
+        <div class="hero-background">
+            <img src="images/轮播banner图.png" alt="梧州港" class="hero-image">
         </div>
         
         <div class="hero-content">
-            <div class="hero-content-inner">
-                <h1>梧州市港务发展集团有限公司</h1>
-                <h2>构建亿吨西江门户枢纽港</h2>
+            <div class="hero-content-container">
+                <div class="hero-text">
+                    <h1 class="hero-title">
+                        梧州市多式联运信息<br>
+                        服务平台
+                    </h1>
+                    <div class="hero-features">
+                        <div class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span class="feature-text">构建亿吨级共享的多式联运信息服务平台</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span class="feature-text">提供全程可视-站式服务</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span class="feature-text">打造数字政府</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span class="feature-text">展望未来</span>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-        
-        <div class="slider-controls">
-            <button class="slider-dot active" data-index="0"></button>
-            <button class="slider-dot" data-index="1"></button>
-        </div>
-        
-        <button class="slider-arrow prev">&lt;</button>
-        <button class="slider-arrow next">&gt;</button>
     </section>
 
     <!-- 主内容区 -->
@@ -307,76 +310,88 @@
         </div>
     </footer>
 
+    <!-- 登录模态框 -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>用户登录</h2>
+                <span class="close" onclick="closeLoginModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="loginForm" class="auth-form">
+                    <div class="form-group">
+                        <label for="loginUsername">用户名/手机号</label>
+                        <input type="text" id="loginUsername" name="username" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="loginPassword">密码</label>
+                        <input type="password" id="loginPassword" name="password" required>
+                    </div>
+                    <div class="form-options">
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="remember">
+                            <span class="checkmark"></span>
+                            记住我
+                        </label>
+                        <a href="#" class="forgot-password">忘记密码？</a>
+                    </div>
+                    <button type="submit" class="btn-submit">登录</button>
+                </form>
+                <div class="auth-divider">
+                    <span>或</span>
+                </div>
+                <div class="social-login">
+                    <button class="btn-social btn-wechat">微信登录</button>
+                    <button class="btn-social btn-qq">QQ登录</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 注册模态框 -->
+    <div id="registerModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>用户注册</h2>
+                <span class="close" onclick="closeRegisterModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="registerForm" class="auth-form">
+                    <div class="form-group">
+                        <label for="registerUsername">用户名</label>
+                        <input type="text" id="registerUsername" name="username" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="registerPhone">手机号</label>
+                        <input type="tel" id="registerPhone" name="phone" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="registerEmail">邮箱</label>
+                        <input type="email" id="registerEmail" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="registerPassword">密码</label>
+                        <input type="password" id="registerPassword" name="password" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="registerConfirmPassword">确认密码</label>
+                        <input type="password" id="registerConfirmPassword" name="confirmPassword" required>
+                    </div>
+                    <div class="form-options">
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="agree" required>
+                            <span class="checkmark"></span>
+                            我已阅读并同意 <a href="#" class="terms-link">用户协议</a> 和 <a href="#" class="terms-link">隐私政策</a>
+                        </label>
+                    </div>
+                    <button type="submit" class="btn-submit">注册</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <script>
-        // 轮播功能
-        document.addEventListener('DOMContentLoaded', function() {
-            const slides = document.querySelectorAll('.hero-slide');
-            const dots = document.querySelectorAll('.slider-dot');
-            const prevBtn = document.querySelector('.slider-arrow.prev');
-            const nextBtn = document.querySelector('.slider-arrow.next');
-            let currentSlide = 0;
-            let slideInterval;
-
-            // 切换到指定幻灯片
-            function goToSlide(index) {
-                slides[currentSlide].classList.remove('active');
-                dots[currentSlide].classList.remove('active');
-                
-                currentSlide = index;
-                
-                slides[currentSlide].classList.add('active');
-                dots[currentSlide].classList.add('active');
-            }
-
-            // 下一张幻灯片
-            function nextSlide() {
-                const nextIndex = (currentSlide + 1) % slides.length;
-                goToSlide(nextIndex);
-            }
-
-            // 上一张幻灯片
-            function prevSlide() {
-                const prevIndex = (currentSlide - 1 + slides.length) % slides.length;
-                goToSlide(prevIndex);
-            }
-
-            // 自动播放
-            function startAutoPlay() {
-                slideInterval = setInterval(nextSlide, 5000); // 5秒切换一次
-            }
-
-            function stopAutoPlay() {
-                clearInterval(slideInterval);
-            }
-
-            // 事件监听
-            dots.forEach((dot, index) => {
-                dot.addEventListener('click', () => {
-                    goToSlide(index);
-                    stopAutoPlay();
-                    startAutoPlay();
-                });
-            });
-
-            prevBtn.addEventListener('click', () => {
-                prevSlide();
-                stopAutoPlay();
-                startAutoPlay();
-            });
-
-            nextBtn.addEventListener('click', () => {
-                nextSlide();
-                stopAutoPlay();
-                startAutoPlay();
-            });
-
-            // 鼠标悬停时暂停自动播放
-            document.querySelector('.hero-section').addEventListener('mouseenter', stopAutoPlay);
-            document.querySelector('.hero-section').addEventListener('mouseleave', startAutoPlay);
-
-            // 开始自动播放
-            startAutoPlay();
-        });
+        // 简化的页面交互功能
 
         // 核心能力切换功能
         document.addEventListener('DOMContentLoaded', function() {
@@ -401,6 +416,79 @@
                     }
                 });
             });
+        });
+
+        // 登录注册模态框功能
+        function openLoginModal() {
+            document.getElementById('loginModal').style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLoginModal() {
+            document.getElementById('loginModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        function openRegisterModal() {
+            document.getElementById('registerModal').style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeRegisterModal() {
+            document.getElementById('registerModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        // 点击模态框外部关闭
+        window.onclick = function(event) {
+            const loginModal = document.getElementById('loginModal');
+            const registerModal = document.getElementById('registerModal');
+            
+            if (event.target === loginModal) {
+                closeLoginModal();
+            }
+            if (event.target === registerModal) {
+                closeRegisterModal();
+            }
+        }
+
+        // 表单提交处理
+        document.addEventListener('DOMContentLoaded', function() {
+            const loginForm = document.getElementById('loginForm');
+            const registerForm = document.getElementById('registerForm');
+
+            if (loginForm) {
+                loginForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    const username = document.getElementById('loginUsername').value;
+                    const password = document.getElementById('loginPassword').value;
+                    
+                    // 这里可以添加实际的登录逻辑
+                    console.log('登录信息:', { username, password });
+                    alert('登录功能开发中，请稍后...');
+                });
+            }
+
+            if (registerForm) {
+                registerForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    const username = document.getElementById('registerUsername').value;
+                    const phone = document.getElementById('registerPhone').value;
+                    const email = document.getElementById('registerEmail').value;
+                    const password = document.getElementById('registerPassword').value;
+                    const confirmPassword = document.getElementById('registerConfirmPassword').value;
+                    
+                    // 验证密码
+                    if (password !== confirmPassword) {
+                        alert('两次输入的密码不一致！');
+                        return;
+                    }
+                    
+                    // 这里可以添加实际的注册逻辑
+                    console.log('注册信息:', { username, phone, email, password });
+                    alert('注册功能开发中，请稍后...');
+                });
+            }
         });
     </script>
 </body>

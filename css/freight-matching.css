@@ -1,0 +1,1143 @@
+/* ================================
+   货运撮合页面 - 架构级重构样式
+   资深前端架构师重构版本
+   ================================ */
+
+/* 全局重置与基础样式 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+    line-height: 1.6;
+    color: #374151;
+    background-color: #f8fafc;
+}
+
+/* ================================
+   头部导航区 - position: sticky解决截断
+   ================================ */
+header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background-color: white;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+    border-bottom: 1px solid #e5e7eb;
+}
+
+/* 当前页面链接高亮样式 */
+.nav-menu a.active {
+    color: #4A8BFF;
+}
+
+/* ================================
+   热门路线轮播组件样式
+   ================================ */
+
+/* 热门路线区域背景 */
+.routes-section {
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+    margin: 32px 0;
+    overflow: hidden;
+    max-width: 1400px;
+    margin: 32px auto;
+    padding: 48px 0;
+}
+
+/* 1. 轮播容器 (.slider-container) */
+.slider-container {
+    position: relative;
+    overflow: hidden;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 80px; /* 为按钮留出更多空间，保持与其他区域一致的内边距 */
+}
+
+/* 2. 可滚动的轨道 (.slider-track) */
+.slider-track {
+    display: flex;
+    gap: 24px;
+    flex-wrap: nowrap;
+    scroll-behavior: smooth;
+    overflow-x: auto;
+    padding: 0 0 20px 0; /* 底部留空间避免滚动条影响 */
+    
+    /* 隐藏滚动条 - Firefox */
+    scrollbar-width: none;
+    
+    /* 隐藏滚动条 - Chrome, Safari, Opera */
+    &::-webkit-scrollbar {
+        display: none;
+    }
+}
+
+/* Webkit浏览器滚动条隐藏 */
+.slider-track::-webkit-scrollbar {
+    display: none;
+}
+
+/* 3. 单张路线卡片 (.route-card) */
+.route-card {
+    flex-shrink: 0;
+    flex-basis: calc(33.333% - 16px);
+    min-width: 350px; /* 确保卡片最小宽度 */
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+    border: 1px solid #f1f5f9;
+}
+
+.route-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+}
+
+/* 4. 左右导航按钮 (.slider-btn) */
+.slider-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid #e2e8f0;
+    color: #64748b;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 10;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.slider-btn:hover {
+    background: white;
+    color: #4A8BFF;
+    border-color: #4A8BFF;
+    transform: translateY(-50%) scale(1.05);
+    box-shadow: 0 6px 20px rgba(74, 139, 255, 0.2);
+}
+
+.slider-btn:active {
+    transform: translateY(-50%) scale(0.95);
+}
+
+.prev-btn {
+    left: -20px;
+}
+
+.next-btn {
+    right: -20px;
+}
+
+/* 新增业务标签样式 */
+.business-tag.air {
+    background: linear-gradient(135deg, #06b6d4, #0891b2);
+    color: white;
+}
+
+.business-tag.multimodal {
+    background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+    color: white;
+}
+
+.business-tag.cold-chain {
+    background: linear-gradient(135deg, #10b981, #059669);
+    color: white;
+}
+
+/* ================================
+   主内容区 - 扩大布局，更好利用空间
+   ================================ */
+main {
+    padding: 100px 0 32px;
+    width: 100%;
+}
+
+/* ================================
+   筛选功能区 - 扩大尺寸，提升交互性
+   ================================ */
+.filter-section {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    max-width: 1400px;
+    margin: 0 auto 40px;
+    padding: 48px 40px;
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+/* 主筛选行 - 扩大间距，更好的交互体验 */
+.main-filter-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    align-items: flex-end;
+    width: 100%;
+}
+
+/* 搜索框组件 - 确保可交互性 */
+.search-box {
+    position: relative;
+    flex: 2;
+    min-width: 320px;
+    max-width: 400px;
+}
+
+.search-icon {
+    position: absolute;
+    left: 18px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #9ca3af;
+    font-size: 16px;
+    pointer-events: none;
+    user-select: none;
+}
+
+.search-input {
+    width: 100%;
+    height: 52px;
+    padding: 0 20px 0 52px;
+    border: 2px solid #e2e8f0;
+    border-radius: 10px;
+    font-size: 15px;
+    background: white;
+    color: #374151;
+    transition: all 0.2s ease;
+    outline: none;
+    box-sizing: border-box;
+    display: block;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+.search-input:focus {
+    outline: none;
+    border-color: #4A8BFF;
+    box-shadow: 0 0 0 3px rgba(74, 139, 255, 0.1);
+}
+
+.search-input::placeholder {
+    color: #9ca3af;
+}
+
+/* 筛选组件 - 扩大尺寸 */
+.filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex: 1;
+    min-width: 180px;
+}
+
+.filter-label {
+    font-size: 14px;
+    color: #374151;
+    font-weight: 500;
+}
+
+.filter-select {
+    height: 52px;
+    padding: 0 20px;
+    border: 2px solid #e2e8f0;
+    border-radius: 10px;
+    font-size: 15px;
+    background: white;
+    color: #374151;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+    background-position: right 20px center;
+    background-repeat: no-repeat;
+    background-size: 16px;
+    padding-right: 52px;
+    outline: none;
+}
+
+.filter-select:focus {
+    outline: none;
+    border-color: #4A8BFF;
+    box-shadow: 0 0 0 3px rgba(74, 139, 255, 0.1);
+}
+
+/* 查询按钮 - 更大更醒目 */
+.search-btn {
+    height: 52px;
+    padding: 0 32px;
+    background: #4A8BFF;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+    flex-shrink: 0;
+    min-width: 140px;
+    justify-content: center;
+}
+
+.search-btn:hover {
+    background: #3A7BEF;
+    transform: translateY(-1px);
+}
+
+.search-btn i {
+    font-size: 16px;
+}
+
+/* 快捷排序行 - 扩大间距 */
+.sort-row {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    flex-wrap: wrap;
+    padding-top: 20px;
+    border-top: 1px solid #f1f5f9;
+    width: 100%;
+}
+
+.sort-label {
+    font-size: 14px;
+    color: #374151;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+/* 排序按钮 - 更大更易点击 */
+.sort-btn {
+    padding: 10px 20px;
+    border: 2px solid #d1d5db;
+    border-radius: 8px;
+    background: white;
+    color: #6b7280;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+    min-height: 42px;
+}
+
+.sort-btn:hover {
+    border-color: #4A8BFF;
+    color: #4A8BFF;
+}
+
+/* 激活状态 - 品牌蓝实心填充 */
+.sort-btn.active {
+    background: #4A8BFF;
+    color: white;
+    border-color: #4A8BFF;
+    font-weight: 600;
+}
+
+/* ================================
+   响应式布局 - 确保任何宽度都不重叠
+   ================================ */
+
+/* 中等屏幕 */
+@media (max-width: 1200px) {
+    .nav-container {
+        padding: 0 24px;
+    }
+    
+    main {
+        padding: 70px 0 24px;
+    }
+    
+    .filter-section {
+        padding: 32px 20px;
+    }
+    
+    .routes-section {
+        margin: 24px 20px;
+        padding: 32px 0;
+        border-radius: 12px;
+    }
+    
+    .search-box {
+        flex: 1 1 100%;
+        min-width: 100%;
+        max-width: none;
+        margin-bottom: 12px;
+    }
+    
+    .filter-group {
+        flex: 1 1 calc(50% - 10px);
+        min-width: 160px;
+    }
+    
+    .search-btn {
+        flex: 1 1 100%;
+        justify-content: center;
+        margin-top: 12px;
+    }
+}
+
+/* 小屏幕 */
+@media (max-width: 768px) {
+    .nav-menu {
+        display: none;
+    }
+    
+    .nav-container {
+        padding: 0 20px;
+    }
+    
+    main {
+        padding: 55px 0 20px;
+    }
+    
+    .routes-section {
+        margin: 20px 16px;
+        padding: 24px 0;
+        border-radius: 8px;
+    }
+    
+    .main-filter-row {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 16px;
+    }
+    
+    .search-box,
+    .filter-group {
+        flex: none;
+        min-width: 100%;
+        max-width: none;
+    }
+    
+    .search-btn {
+        margin-top: 8px;
+    }
+    
+    .sort-row {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
+    }
+    
+    .sort-btn {
+        width: 100%;
+        text-align: center;
+        justify-content: center;
+    }
+    
+    .hot-routes-header,
+    .hot-routes-grid,
+    .freight-list-header,
+    .freight-list,
+    .pagination {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+}
+
+/* 轮播组件响应式设计 */
+@media (max-width: 1200px) {
+    .route-card {
+        flex-basis: calc(50% - 12px);
+        min-width: 300px;
+    }
+    
+    .slider-container {
+        padding: 0 60px;
+    }
+}
+
+@media (max-width: 768px) {
+    .route-card {
+        flex-basis: calc(100% - 0px);
+        min-width: 280px;
+    }
+    
+    .slider-container {
+        padding: 0 40px;
+    }
+    
+    .slider-btn {
+        width: 40px;
+        height: 40px;
+        font-size: 16px;
+    }
+    
+    .prev-btn {
+        left: -15px;
+    }
+    
+    .next-btn {
+        right: -15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .slider-container {
+        padding: 0 28px;
+    }
+    
+    .slider-track {
+        gap: 16px;
+    }
+    
+    .route-card {
+        min-width: 260px;
+    }
+    
+    .slider-btn {
+        width: 36px;
+        height: 36px;
+        font-size: 14px;
+    }
+    
+    .prev-btn {
+        left: -12px;
+    }
+    
+    .next-btn {
+        right: -12px;
+    }
+}
+
+/* 超小屏幕 */
+@media (max-width: 480px) {
+    .nav-container {
+        padding: 0 16px;
+        height: 55px;
+    }
+    
+    main {
+        padding: 45px 0 16px;
+    }
+    
+    .routes-section {
+        margin: 16px 12px;
+        padding: 20px 0;
+        border-radius: 6px;
+    }
+    
+    .filter-section {
+        padding: 32px 16px;
+    }
+    
+    .auth-buttons {
+        gap: 8px;
+    }
+    
+    .btn {
+        padding: 8px 16px;
+        font-size: 13px;
+    }
+    
+    .search-input,
+    .filter-select,
+    .search-btn {
+        height: 48px;
+        font-size: 14px;
+    }
+    
+    .search-input {
+        padding: 0 16px 0 44px;
+    }
+    
+    .search-icon {
+        left: 14px;
+    }
+    
+    .filter-select {
+        padding: 0 16px;
+        padding-right: 44px;
+        background-position: right 16px center;
+    }
+    
+    .search-btn {
+        padding: 0 20px;
+        font-size: 15px;
+    }
+    
+    .hot-routes-header,
+    .hot-routes-grid,
+    .freight-list-header,
+    .freight-list,
+    .pagination {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+}
+
+/* ================================
+   热门路线卡片展示区样式 (已移除，使用.routes-section)
+   ================================ */
+
+.hot-routes-header {
+    max-width: 1400px;
+    margin: 0 auto 36px;
+    padding: 0 40px;
+}
+
+.hot-routes-title-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.title-decoration {
+    width: 4px;
+    height: 24px;
+    background: #4A8BFF;
+    border-radius: 2px;
+}
+
+.hot-routes-title {
+    font-size: 24px;
+    font-weight: 600;
+    color: #1e293b;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.hot-routes-title i {
+    color: #f59e0b;
+    font-size: 20px;
+}
+
+.hot-routes-subtitle {
+    font-size: 14px;
+    color: #64748b;
+    margin: 0;
+    font-weight: 400;
+}
+
+.hot-routes-grid {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 40px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 32px;
+}
+
+/* 热门路线卡片样式 (保持精确实现) */
+.hot-route-card {
+    background: white;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.hot-route-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+.route-image-container {
+    position: relative;
+    height: 180px;
+    overflow: hidden;
+}
+
+.route-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 12px 12px 0 0;
+}
+
+.hot-route-badge {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: #ef4444;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 500;
+    transform: rotate(15deg);
+}
+
+.route-content {
+    padding: 20px;
+}
+
+.route-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.business-tag {
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 500;
+    border: 1px solid;
+}
+
+.business-tag.sea-rail {
+    background: #dcfce7;
+    color: #166534;
+    border-color: #bbf7d0;
+}
+
+.business-tag.inland {
+    background: #dbeafe;
+    color: #1e40af;
+    border-color: #bfdbfe;
+}
+
+.business-tag.road {
+    background: #fef3c7;
+    color: #92400e;
+    border-color: #fde68a;
+}
+
+.validity-date {
+    font-size: 12px;
+    color: #64748b;
+}
+
+.route-main {
+    margin-bottom: 15px;
+}
+
+.route-path {
+    font-size: 16px;
+    font-weight: 600;
+    color: #1e293b;
+    margin: 0 0 8px 0;
+    line-height: 1.4;
+}
+
+.route-duration {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 14px;
+    color: #64748b;
+}
+
+.route-duration i {
+    color: #f59e0b;
+    font-size: 12px;
+}
+
+.route-specs {
+    font-size: 13px;
+    color: #64748b;
+    margin-bottom: 15px;
+    padding: 8px 0;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.route-price {
+    margin-bottom: 20px;
+}
+
+.price-label {
+    font-size: 13px;
+    color: #64748b;
+    margin-right: 8px;
+}
+
+.price-value {
+    font-size: 18px;
+    font-weight: 700;
+    color: #ef4444;
+}
+
+.route-actions {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.btn-primary {
+    background: #4A8BFF;
+    color: white;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    flex: 1;
+}
+
+.btn-primary:hover {
+    background: #3A7BEF;
+}
+
+.consult-wrapper {
+    position: relative;
+    flex: 1;
+}
+
+.btn-secondary {
+    background: white;
+    color: #4A8BFF;
+    border: 1px solid #4A8BFF;
+    padding: 10px 16px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 100%;
+}
+
+.btn-secondary:hover {
+    background: #f8fafc;
+}
+
+.discount-badge {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background: #f59e0b;
+    color: white;
+    padding: 2px 6px;
+    border-radius: 10px;
+    font-size: 10px;
+    font-weight: 500;
+}
+
+/* ================================
+   货源列表区样式 (保持现有功能)
+   ================================ */
+.freight-list-section {
+    padding: 48px 0;
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.freight-list-header {
+    max-width: 1400px;
+    margin: 0 auto 36px;
+    padding: 0 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 24px;
+}
+
+.section-title {
+    font-size: 24px;
+    font-weight: 600;
+    color: #1e293b;
+    margin: 0;
+}
+
+.list-controls {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.total-count {
+    font-size: 14px;
+    color: #64748b;
+}
+
+.view-options {
+    display: flex;
+    gap: 8px;
+}
+
+.view-btn {
+    padding: 6px 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    background: white;
+    color: #64748b;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.view-btn:hover {
+    border-color: #4A8BFF;
+    color: #4A8BFF;
+}
+
+.view-btn.active {
+    background: #4A8BFF;
+    color: white;
+    border-color: #4A8BFF;
+}
+
+.freight-list {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 40px;
+}
+
+/* 货源列表项样式 */
+.freight-item {
+    background: white;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+    padding: 20px;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    transition: all 0.3s ease;
+}
+
+.freight-item:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transform: translateY(-1px);
+}
+
+.freight-info {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1.5fr 1.5fr;
+    gap: 20px;
+    align-items: center;
+}
+
+.route-info {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.freight-route {
+    font-size: 16px;
+    font-weight: 600;
+    color: #1e293b;
+    margin: 0;
+}
+
+.transport-type {
+    font-size: 12px;
+    color: #64748b;
+    background: #f1f5f9;
+    padding: 2px 6px;
+    border-radius: 4px;
+    display: inline-block;
+    width: fit-content;
+}
+
+.cargo-info {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.cargo-type {
+    font-size: 14px;
+    color: #1e293b;
+    font-weight: 500;
+}
+
+.cargo-weight {
+    font-size: 12px;
+    color: #64748b;
+}
+
+.time-info {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.pickup-time,
+.delivery-time {
+    font-size: 12px;
+    color: #64748b;
+}
+
+.shipper-info {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.shipper-name {
+    font-size: 14px;
+    color: #1e293b;
+    font-weight: 500;
+}
+
+.contact-phone {
+    font-size: 12px;
+    color: #64748b;
+}
+
+.freight-price {
+    text-align: center;
+    min-width: 120px;
+}
+
+.price-amount {
+    font-size: 20px;
+    font-weight: 700;
+    color: #ef4444;
+    display: block;
+}
+
+.price-unit {
+    font-size: 12px;
+    color: #64748b;
+}
+
+.freight-actions {
+    min-width: 100px;
+}
+
+.btn-bid {
+    background: #4A8BFF;
+    color: white;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 100%;
+}
+
+.btn-bid:hover {
+    background: #3A7BEF;
+    transform: translateY(-1px);
+}
+
+/* 分页样式 */
+.pagination {
+    max-width: 1400px;
+    margin: 48px auto 0;
+    padding: 0 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+}
+
+.page-numbers {
+    display: flex;
+    gap: 5px;
+}
+
+.page-btn {
+    padding: 8px 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    background: white;
+    color: #64748b;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-width: 40px;
+}
+
+.page-btn:hover {
+    border-color: #4A8BFF;
+    color: #4A8BFF;
+}
+
+.page-btn.active {
+    background: #4A8BFF;
+    color: white;
+    border-color: #4A8BFF;
+}
+
+.page-btn.prev,
+.page-btn.next {
+    min-width: 80px;
+}
+
+.page-ellipsis {
+    padding: 8px 12px;
+    color: #64748b;
+    font-size: 14px;
+}
+
+/* ================================
+   移动端进一步优化
+   ================================ */
+@media (max-width: 768px) {
+    .hot-routes-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+        padding: 0 16px;
+    }
+    
+    .freight-item {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 15px;
+    }
+    
+    .freight-info {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+    
+    .freight-price {
+        text-align: left;
+    }
+    
+    .freight-actions {
+        min-width: auto;
+    }
+    
+    .list-controls {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .hot-routes-header,
+    .hot-routes-grid,
+    .freight-list-header,
+    .freight-list,
+    .pagination {
+        padding-left: 12px;
+        padding-right: 12px;
+    }
+    
+    .hot-routes-title {
+        font-size: 20px;
+    }
+    
+    .section-title {
+        font-size: 20px;
+    }
+}

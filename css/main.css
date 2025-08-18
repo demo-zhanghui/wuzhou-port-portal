@@ -15,6 +15,7 @@ body {
 .main-content {
     background: #F7F8FA;
     padding: 80px 0;
+    margin-top: 0; /* 不需要额外的margin，hero区域已经是全屏 */
 }
 
 .container {

@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>物流跟踪 - 梧州市多式联运供应链信息平台</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+    <!-- 顶部导航栏 -->
+    <header class="header">
+        <nav class="nav-container">
+            <div class="nav-logo">
+                <img src="images/企业logo.png" alt="梧州港Logo" class="logo-img">
+                <span class="logo-text">梧州市多式联运供应链信息平台</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-item">首页</a></li>
+                <li><a href="logistics-tracking.html" class="nav-item active">物流跟踪</a></li>
+                <li><a href="freight-matching.html" class="nav-item">货运撮合</a></li>
+                <li><a href="policy-benefits.html" class="nav-item">政策惠企</a></li>
+                <li><a href="news.html" class="nav-item">新闻</a></li>
+                <li><a href="partners.html" class="nav-item">合作伙伴</a></li>
+            </ul>
+            <div class="auth-buttons">
+                <button class="btn-login" onclick="openLoginModal()">登录</button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- 主要内容区域 -->
+    <main class="main-content">
+        <div class="container">
+            <!-- 页面标题 -->
+            <section class="page-header">
+                <h1>物流跟踪</h1>
+                <p>实时跟踪您的货物运输状态，全程透明可视化</p>
+            </section>
+
+            <!-- 查询区域 -->
+            <section class="tracking-search">
+                <div class="search-container">
+                    <h2>货物跟踪查询</h2>
+                    <div class="search-form">
+                        <div class="search-tabs">
+                            <button class="tab-btn active" data-tab="waybill">运单号查询</button>
+                            <button class="tab-btn" data-tab="container">集装箱号查询</button>
+                            <button class="tab-btn" data-tab="vehicle">车牌号查询</button>
+                        </div>
+                        
+                        <div class="search-input-group">
+                            <input type="text" id="trackingNumber" placeholder="请输入运单号/集装箱号/车牌号" class="search-input">
+                            <button class="search-btn" onclick="trackShipment()">查询</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 跟踪结果展示区域 -->
+            <section class="tracking-results" id="trackingResults" style="display: none;">
+                <div class="result-container">
+                    <h3>跟踪结果</h3>
+                    <div class="shipment-info">
+                        <div class="info-card">
+                            <h4>基本信息</h4>
+                            <div class="info-grid">
+                                <div class="info-item">
+                                    <span class="label">运单号：</span>
+                                    <span class="value" id="waybillNumber">-</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="label">发货地：</span>
+                                    <span class="value" id="origin">-</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="label">目的地：</span>
+                                    <span class="value" id="destination">-</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="label">当前状态：</span>
+                                    <span class="value status" id="currentStatus">-</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 物流轨迹 -->
+                    <div class="tracking-timeline">
+                        <h4>物流轨迹</h4>
+                        <div class="timeline" id="trackingTimeline">
+                            <!-- 动态生成的轨迹信息 -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 服务特色 -->
+            <section class="service-features">
+                <h2>服务特色</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">🌐</div>
+                        <h3>全程可视</h3>
+                        <p>实时查看货物位置和运输状态，全程透明化管理</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">⚡</div>
+                        <h3>实时更新</h3>
+                        <p>系统自动同步最新物流信息，确保数据准确及时</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🔔</div>
+                        <h3>智能提醒</h3>
+                        <p>关键节点自动推送通知，重要信息不遗漏</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">📱</div>
+                        <h3>多端同步</h3>
+                        <p>支持PC、手机等多终端查询，随时随地掌握动态</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 梧州市港务发展集团有限公司. 保留所有权利.</p>
+        </div>
+    </footer>
+
+    <script>
+        // 切换查询标签
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                
+                const tab = this.dataset.tab;
+                const input = document.getElementById('trackingNumber');
+                
+                switch(tab) {
+                    case 'waybill':
+                        input.placeholder = '请输入运单号';
+                        break;
+                    case 'container':
+                        input.placeholder = '请输入集装箱号';
+                        break;
+                    case 'vehicle':
+                        input.placeholder = '请输入车牌号';
+                        break;
+                }
+            });
+        });
+
+        // 模拟跟踪查询
+        function trackShipment() {
+            const trackingNumber = document.getElementById('trackingNumber').value.trim();
+            
+            if (!trackingNumber) {
+                alert('请输入查询号码');
+                return;
+            }
+
+            // 显示结果区域
+            document.getElementById('trackingResults').style.display = 'block';
+            
+            // 模拟数据填充
+            document.getElementById('waybillNumber').textContent = trackingNumber;
+            document.getElementById('origin').textContent = '梧州港';
+            document.getElementById('destination').textContent = '广州港';
+            document.getElementById('currentStatus').textContent = '运输中';
+            
+            // 生成模拟轨迹
+            const timeline = document.getElementById('trackingTimeline');
+            timeline.innerHTML = `
+                <div class="timeline-item completed">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <h5>货物已发出</h5>
+                        <p>梧州港 - 已装船</p>
+                        <span class="time">2024-01-15 09:00</span>
+                    </div>
+                </div>
+                <div class="timeline-item completed">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <h5>运输途中</h5>
+                        <p>西江航道 - 正常行驶</p>
+                        <span class="time">2024-01-15 14:30</span>
+                    </div>
+                </div>
+                <div class="timeline-item current">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <h5>即将到达</h5>
+                        <p>预计今日18:00到达广州港</p>
+                        <span class="time">预计 2024-01-15 18:00</span>
+                    </div>
+                </div>
+            `;
+            
+            // 滚动到结果区域
+            document.getElementById('trackingResults').scrollIntoView({ 
+                behavior: 'smooth' 
+            });
+        }
+
+        // 登录模态框功能
+        function openLoginModal() {
+            alert('登录功能开发中...');
+        }
+    </script>
+
+    <style>
+        /* 物流跟踪页面特有样式 */
+        .page-header {
+            text-align: center;
+            padding: 60px 0 40px;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            margin-bottom: 40px;
+        }
+
+        .page-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .page-header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .tracking-search {
+            margin-bottom: 40px;
+        }
+
+        .search-container {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .search-container h2 {
+            text-align: center;
+            color: #1e3c72;
+            margin-bottom: 30px;
+            font-size: 1.8rem;
+        }
+
+        .search-tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .tab-btn {
+            padding: 12px 24px;
+            border: none;
+            background: none;
+            color: #666;
+            cursor: pointer;
+            font-size: 1rem;
+            border-bottom: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .tab-btn.active {
+            color: #1e3c72;
+            border-bottom-color: #1e3c72;
+        }
+
+        .search-input-group {
+            display: flex;
+            gap: 12px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 15px 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #1e3c72;
+        }
+
+        .search-btn {
+            padding: 15px 30px;
+            background: #1e3c72;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .search-btn:hover {
+            background: #2a5298;
+        }
+
+        .tracking-results {
+            margin-bottom: 40px;
+        }
+
+        .result-container {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .info-card {
+            margin-bottom: 30px;
+        }
+
+        .info-card h4 {
+            color: #1e3c72;
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .info-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .info-item .label {
+            font-weight: 600;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .info-item .value {
+            font-size: 1.1rem;
+            color: #333;
+        }
+
+        .info-item .value.status {
+            color: #28a745;
+            font-weight: 600;
+        }
+
+        .tracking-timeline {
+            margin-top: 30px;
+        }
+
+        .tracking-timeline h4 {
+            color: #1e3c72;
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+        }
+
+        .timeline {
+            position: relative;
+            padding-left: 30px;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 15px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: #e0e0e0;
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 30px;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: -37px;
+            top: 5px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #e0e0e0;
+            border: 3px solid white;
+            box-shadow: 0 0 0 2px #e0e0e0;
+        }
+
+        .timeline-item.completed .timeline-dot {
+            background: #28a745;
+            box-shadow: 0 0 0 2px #28a745;
+        }
+
+        .timeline-item.current .timeline-dot {
+            background: #ffc107;
+            box-shadow: 0 0 0 2px #ffc107;
+        }
+
+        .timeline-content h5 {
+            color: #333;
+            margin-bottom: 5px;
+            font-size: 1.1rem;
+        }
+
+        .timeline-content p {
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .timeline-content .time {
+            color: #999;
+            font-size: 0.9rem;
+        }
+
+        .service-features {
+            margin-bottom: 40px;
+        }
+
+        .service-features h2 {
+            text-align: center;
+            color: #1e3c72;
+            margin-bottom: 40px;
+            font-size: 2rem;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        .feature-card h3 {
+            color: #1e3c72;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+
+        .feature-card p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 768px) {
+            .search-input-group {
+                flex-direction: column;
+            }
+            
+            .search-tabs {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</body>
+</html>
