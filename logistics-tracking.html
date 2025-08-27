@@ -3,10 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>物流跟踪 - 梧州市多式联运供应链信息平台</title>
+    <title>物流跟踪 v2.0 - 梧州市多式联运供应链信息平台</title>
+    <!-- 
+    运单详情可视化面板 - 颠覆性重构说明：
+    
+    1. 地图背景图片：
+       - 文件路径：'images/map-background.png'
+       - 建议使用：梧州港到广州港的区域地图截图
+       - 图片尺寸：800x400px 或更大，确保清晰度
+       - 格式：PNG、JPG 均可
+    
+    2. 重构特点：
+       - 地图背景作为整个右侧详情面板的统一背景
+       - 【运单概要】和【物流节点】以半透明卡片形式悬浮在地图之上
+       - 彻底移除原有的【运输轨迹】模块
+       - 实现信息与地理位置的完美视觉融合
+    
+    3. 视觉效果：
+       - 半透明白色背景 (rgba(255, 255, 255, 0.85))
+       - 毛玻璃效果 (backdrop-filter: blur(10px))
+       - 文字阴影确保在地图背景上的可读性
+    -->
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/components.css">
     <link rel="stylesheet" href="css/responsive.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
     <!-- 顶部导航栏 -->
@@ -33,92 +55,126 @@
     <!-- 主要内容区域 -->
     <main class="main-content">
         <div class="container">
-            <!-- 页面标题 -->
-            <section class="page-header">
-                <h1>物流跟踪</h1>
-                <p>实时跟踪您的货物运输状态，全程透明可视化</p>
-            </section>
-
-            <!-- 查询区域 -->
-            <section class="tracking-search">
-                <div class="search-container">
-                    <h2>货物跟踪查询</h2>
-                    <div class="search-form">
-                        <div class="search-tabs">
-                            <button class="tab-btn active" data-tab="waybill">运单号查询</button>
-                            <button class="tab-btn" data-tab="container">集装箱号查询</button>
-                            <button class="tab-btn" data-tab="vehicle">车牌号查询</button>
+            <!-- 区域一：智能查询区 (Smart Query Zone) - 页面总入口 -->
+            <section class="smart-query-zone">
+                <div class="query-container">
+                    <h2>智能物流跟踪查询</h2>
+                    <div class="query-form">
+                        <div class="query-tabs">
+                            <button class="query-tab-btn active" data-tab="waybill">运单号</button>
+                            <button class="query-tab-btn" data-tab="vehicle">车牌号</button>
+                            <button class="query-tab-btn" data-tab="vessel">船舶名/航次</button>
                         </div>
                         
-                        <div class="search-input-group">
-                            <input type="text" id="trackingNumber" placeholder="请输入运单号/集装箱号/车牌号" class="search-input">
-                            <button class="search-btn" onclick="trackShipment()">查询</button>
+                        <div class="query-input-group">
+                            <input type="text" id="queryInput" placeholder="请输入运单号" class="query-input">
+                            <button class="query-btn" onclick="performQuery()">查询</button>
                         </div>
                     </div>
                 </div>
             </section>
 
-            <!-- 跟踪结果展示区域 -->
-            <section class="tracking-results" id="trackingResults" style="display: none;">
-                <div class="result-container">
-                    <h3>跟踪结果</h3>
-                    <div class="shipment-info">
-                        <div class="info-card">
-                            <h4>基本信息</h4>
-                            <div class="info-grid">
-                                <div class="info-item">
-                                    <span class="label">运单号：</span>
-                                    <span class="value" id="waybillNumber">-</span>
+            <!-- 区域二：主内容区 (Main Content Area) - 左右分栏 -->
+            <section class="main-content-area">
+                <!-- 左栏：我的运单列表 (Order List Panel) -->
+                <div class="left-panel">
+                    <div class="order-list-header">
+                        <h3>我的运单列表</h3>
+                        <span class="order-count">共 5 条运单</span>
+                    </div>
+                    
+                    <div class="order-list" id="orderList">
+                        <!-- 运单列表项 - 默认第一个激活 -->
+                        <div class="order-item active" data-order-id="order001" onclick="selectOrder('order001')">
+                            <div class="order-header">
+                                <span class="order-number">WL202412001</span>
+                                <span class="order-status status-transporting">运输中</span>
+                            </div>
+                            <div class="order-route">梧州港 → 广州南沙港</div>
+                            <div class="order-time">预计今日18:00到达</div>
+                        </div>
+
+                        <div class="order-item" data-order-id="order002" onclick="selectOrder('order002')">
+                            <div class="order-header">
+                                <span class="order-number">WL202412002</span>
+                                <span class="order-status status-pending">待装船</span>
+                            </div>
+                            <div class="order-route">梧州港 → 深圳盐田港</div>
+                            <div class="order-time">明日09:00装船</div>
+                        </div>
+
+                        <div class="order-item" data-order-id="order003" onclick="selectOrder('order003')">
+                            <div class="order-header">
+                                <span class="order-number">WL202412003</span>
+                                <span class="order-status status-delivered">已签收</span>
+                            </div>
+                            <div class="order-route">梧州港 → 珠海高栏港</div>
+                            <div class="order-time">昨日15:30已签收</div>
+                        </div>
+
+                        <div class="order-item" data-order-id="order004" onclick="selectOrder('order004')">
+                            <div class="order-header">
+                                <span class="order-number">WL202412004</span>
+                                <span class="order-status status-transporting">运输中</span>
+                            </div>
+                            <div class="order-route">梧州港 → 东莞虎门港</div>
+                            <div class="order-time">预计明日12:00到达</div>
+                        </div>
+
+                        <div class="order-item" data-order-id="order005" onclick="selectOrder('order005')">
+                            <div class="order-header">
+                                <span class="order-number">WL202412005</span>
+                                <span class="order-status status-customs">海关查验</span>
+                            </div>
+                            <div class="order-route">梧州港 → 佛山三水港</div>
+                            <div class="order-time">查验中，预计2小时完成</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 右侧可视化面板 - 抽屉式交互重构 -->
+                <div class="visualization-dashboard">
+                    <!-- 地图容器 - 默认全屏展示 -->
+                    <div class="map-container">
+                        <!-- 地图背景，无标记点 -->
+                    </div>
+                    
+                    <!-- 抽屉式信息面板 - 按需滑入 -->
+                    <div class="info-drawer">
+                        <!-- 关闭按钮 -->
+                        <button class="drawer-close-btn" onclick="closeInfoDrawer()">
+                            <span class="close-icon">×</span>
+                        </button>
+                        
+                        <!-- 运单概要模块 -->
+                        <div class="summary-module">
+                            <div class="summary-header">
+                                <h3>运单概要</h3>
+                                <span class="summary-status">运输中</span>
+                            </div>
+                            <div class="summary-grid">
+                                <div class="summary-item">
+                                    <span class="label">运单号</span>
+                                    <span class="value" id="drawer-waybill-number">WL202412001</span>
                                 </div>
-                                <div class="info-item">
-                                    <span class="label">发货地：</span>
-                                    <span class="value" id="origin">-</span>
+                                <div class="summary-item">
+                                    <span class="label">货物类型</span>
+                                    <span class="value" id="drawer-cargo-type">集装箱货物</span>
                                 </div>
-                                <div class="info-item">
-                                    <span class="label">目的地：</span>
-                                    <span class="value" id="destination">-</span>
-                                </div>
-                                <div class="info-item">
-                                    <span class="label">当前状态：</span>
-                                    <span class="value status" id="currentStatus">-</span>
+                                <div class="summary-item">
+                                    <span class="label">预计到达</span>
+                                    <span class="value" id="drawer-eta">2024-12-15 14:30</span>
                                 </div>
                             </div>
                         </div>
-                    </div>
-
-                    <!-- 物流轨迹 -->
-                    <div class="tracking-timeline">
-                        <h4>物流轨迹</h4>
-                        <div class="timeline" id="trackingTimeline">
-                            <!-- 动态生成的轨迹信息 -->
+                        
+                        <!-- 物流节点模块 -->
+                        <div class="timeline-module">
+                            <h3>物流节点</h3>
+                            <div class="timeline" id="drawer-timeline">
+                                <!-- 时间轴内容将通过JavaScript动态生成 -->
+                            </div>
                         </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- 服务特色 -->
-            <section class="service-features">
-                <h2>服务特色</h2>
-                <div class="features-grid">
-                    <div class="feature-card">
-                        <div class="feature-icon">🌐</div>
-                        <h3>全程可视</h3>
-                        <p>实时查看货物位置和运输状态，全程透明化管理</p>
-                    </div>
-                    <div class="feature-card">
-                        <div class="feature-icon">⚡</div>
-                        <h3>实时更新</h3>
-                        <p>系统自动同步最新物流信息，确保数据准确及时</p>
-                    </div>
-                    <div class="feature-card">
-                        <div class="feature-icon">🔔</div>
-                        <h3>智能提醒</h3>
-                        <p>关键节点自动推送通知，重要信息不遗漏</p>
-                    </div>
-                    <div class="feature-card">
-                        <div class="feature-icon">📱</div>
-                        <h3>多端同步</h3>
-                        <p>支持PC、手机等多终端查询，随时随地掌握动态</p>
                     </div>
                 </div>
             </section>
@@ -133,360 +189,714 @@
     </footer>
 
     <script>
-        // 切换查询标签
-        document.querySelectorAll('.tab-btn').forEach(btn => {
+
+
+        // Tab切换功能
+        document.querySelectorAll('.query-tab-btn').forEach(btn => {
             btn.addEventListener('click', function() {
-                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                // 移除所有active类
+                document.querySelectorAll('.query-tab-btn').forEach(b => b.classList.remove('active'));
+                // 添加当前active类
                 this.classList.add('active');
                 
+                // 根据Tab类型更新输入框提示
                 const tab = this.dataset.tab;
-                const input = document.getElementById('trackingNumber');
+                const input = document.getElementById('queryInput');
                 
                 switch(tab) {
                     case 'waybill':
                         input.placeholder = '请输入运单号';
                         break;
-                    case 'container':
-                        input.placeholder = '请输入集装箱号';
-                        break;
                     case 'vehicle':
                         input.placeholder = '请输入车牌号';
+                        break;
+                    case 'vessel':
+                        input.placeholder = '请输入船舶名/航次';
                         break;
                 }
             });
         });
 
-        // 模拟跟踪查询
-        function trackShipment() {
-            const trackingNumber = document.getElementById('trackingNumber').value.trim();
+        // 运单选择功能 - 抽屉式交互重构
+        function selectOrder(orderId) {
+            // 移除所有运单的active状态
+            document.querySelectorAll('.order-item').forEach(item => {
+                item.classList.remove('active');
+            });
             
-            if (!trackingNumber) {
-                alert('请输入查询号码');
+            // 为当前选中的运单添加active状态
+            const currentOrder = document.querySelector(`[data-order-id="${orderId}"]`);
+            if (currentOrder) {
+                currentOrder.classList.add('active');
+            }
+            
+            // 打开抽屉式信息面板
+            openInfoDrawer(orderId);
+        }
+
+        // 打开信息抽屉
+        function openInfoDrawer(orderId) {
+            const drawer = document.querySelector('.info-drawer');
+            if (drawer) {
+                // 根据运单ID填充抽屉内容
+                populateDrawerContent(orderId);
+                // 添加is-open类，触发滑入动画
+                drawer.classList.add('is-open');
+            }
+        }
+
+        // 关闭信息抽屉
+        function closeInfoDrawer() {
+            const drawer = document.querySelector('.info-drawer');
+            if (drawer) {
+                // 移除is-open类，触发滑出动画
+                drawer.classList.remove('is-open');
+            }
+        }
+
+        // 填充抽屉内容
+        function populateDrawerContent(orderId) {
+            // 模拟运单数据
+            const orderData = {
+                'order001': {
+                    waybillNumber: 'WL202412001',
+                    cargoType: '集装箱货物',
+                    eta: '2024-12-15 14:30',
+                    timeline: [
+                        { time: '2024-12-10 08:00', title: '货物装船', description: '梧州港码头装船完成', status: 'success' },
+                        { time: '2024-12-10 10:30', title: '船舶启航', description: '西江航运集团货轮启航', status: 'success' },
+                        { time: '2024-12-12 14:20', title: '航道运输中', description: '西江航道正常航行', status: 'current' },
+                        { time: '2024-12-15 12:00', title: '预计到达', description: '广州港码头卸货', status: 'pending' }
+                    ]
+                },
+                'order002': {
+                    waybillNumber: 'WL202412002',
+                    cargoType: '散装货物',
+                    eta: '2024-12-18 09:15',
+                    timeline: [
+                        { time: '2024-12-11 09:00', title: '货物装船', description: '梧州港码头装船完成', status: 'success' },
+                        { time: '2024-12-11 11:30', title: '船舶启航', description: '西江航运集团货轮启航', status: 'success' },
+                        { time: '2024-12-13 16:45', title: '航道运输中', description: '西江航道正常航行', status: 'current' },
+                        { time: '2024-12-18 09:00', title: '预计到达', description: '广州港码头卸货', status: 'pending' }
+                    ]
+                },
+                'order003': {
+                    waybillNumber: 'WL202412003',
+                    cargoType: '危险品货物',
+                    eta: '2024-12-20 16:45',
+                    timeline: [
+                        { time: '2024-12-12 14:00', title: '货物装船', description: '梧州港码头装船完成', status: 'success' },
+                        { time: '2024-12-12 16:30', title: '船舶启航', description: '西江航运集团货轮启航', status: 'success' },
+                        { time: '2024-12-14 10:20', title: '航道运输中', description: '西江航道正常航行', status: 'current' },
+                        { time: '2024-12-20 16:00', title: '预计到达', description: '广州港码头卸货', status: 'pending' }
+                    ]
+                }
+            };
+
+            const data = orderData[orderId];
+            if (data) {
+                // 更新运单概要
+                document.getElementById('drawer-waybill-number').textContent = data.waybillNumber;
+                document.getElementById('drawer-cargo-type').textContent = data.cargoType;
+                document.getElementById('drawer-eta').textContent = data.eta;
+                
+                // 生成时间轴
+                generateDrawerTimeline(data.timeline);
+            }
+        }
+
+        // 生成抽屉时间轴
+        function generateDrawerTimeline(timelineData) {
+            const timeline = document.getElementById('drawer-timeline');
+            timeline.innerHTML = '';
+            
+            timelineData.forEach((item, index) => {
+                const timelineItem = document.createElement('div');
+                timelineItem.className = `timeline-item status-${item.status}`;
+                
+                timelineItem.innerHTML = `
+                    <div class="timeline-time">${item.time}</div>
+                    <div class="timeline-content">
+                        <div class="timeline-title">${item.title}</div>
+                        <div class="timeline-description">${item.description}</div>
+                    </div>
+                `;
+                
+                timeline.appendChild(timelineItem);
+            });
+        }
+
+
+
+        // 查询功能（模拟）
+        function performQuery() {
+            const queryValue = document.getElementById('queryInput').value.trim();
+            const activeTab = document.querySelector('.query-tab-btn.active').dataset.tab;
+            
+            if (!queryValue) {
+                alert('请输入查询内容');
                 return;
             }
-
-            // 显示结果区域
-            document.getElementById('trackingResults').style.display = 'block';
             
-            // 模拟数据填充
-            document.getElementById('waybillNumber').textContent = trackingNumber;
-            document.getElementById('origin').textContent = '梧州港';
-            document.getElementById('destination').textContent = '广州港';
-            document.getElementById('currentStatus').textContent = '运输中';
-            
-            // 生成模拟轨迹
-            const timeline = document.getElementById('trackingTimeline');
-            timeline.innerHTML = `
-                <div class="timeline-item completed">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-content">
-                        <h5>货物已发出</h5>
-                        <p>梧州港 - 已装船</p>
-                        <span class="time">2024-01-15 09:00</span>
-                    </div>
-                </div>
-                <div class="timeline-item completed">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-content">
-                        <h5>运输途中</h5>
-                        <p>西江航道 - 正常行驶</p>
-                        <span class="time">2024-01-15 14:30</span>
-                    </div>
-                </div>
-                <div class="timeline-item current">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-content">
-                        <h5>即将到达</h5>
-                        <p>预计今日18:00到达广州港</p>
-                        <span class="time">预计 2024-01-15 18:00</span>
-                    </div>
-                </div>
-            `;
-            
-            // 滚动到结果区域
-            document.getElementById('trackingResults').scrollIntoView({ 
-                behavior: 'smooth' 
-            });
+            // 模拟查询结果 - 这里可以根据实际需求调整
+            alert(`正在查询${activeTab === 'waybill' ? '运单号' : activeTab === 'vehicle' ? '车牌号' : '船舶名/航次'}: ${queryValue}\n\n查询功能开发中...`);
         }
 
         // 登录模态框功能
         function openLoginModal() {
             alert('登录功能开发中...');
         }
+
+        // 页面初始化 - 默认不显示抽屉，只显示全屏地图
+        document.addEventListener('DOMContentLoaded', function() {
+            // 默认选中第一个运单（但不显示抽屉）
+            const firstOrder = document.querySelector('.order-item');
+            if (firstOrder) {
+                firstOrder.classList.add('active');
+            }
+        });
     </script>
 
     <style>
-        /* 物流跟踪页面特有样式 */
-        .page-header {
-            text-align: center;
-            padding: 60px 0 40px;
-            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
-            color: white;
-            margin-bottom: 40px;
+        /* 物流跟踪 v2.0 - 可视化重构样式 */
+        
+        /* 全局样式重置 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
-        .page-header h1 {
-            font-size: 2.5rem;
-            margin-bottom: 10px;
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+            line-height: 1.6;
+            color: #374151;
+            background-color: #f8fafc;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* 区域一：智能查询区样式 */
+        .smart-query-zone {
+            margin-bottom: 32px;
+        }
+
+        .query-container {
+            background: white;
+            border-radius: 16px;
+            padding: 32px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+
+        .query-container h2 {
+            text-align: center;
+            color: #1e3c72;
+            margin-bottom: 32px;
+            font-size: 1.8rem;
             font-weight: 600;
         }
 
-        .page-header p {
-            font-size: 1.1rem;
-            opacity: 0.9;
-        }
-
-        .tracking-search {
-            margin-bottom: 40px;
-        }
-
-        .search-container {
-            background: white;
-            border-radius: 12px;
-            padding: 30px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-        }
-
-        .search-container h2 {
-            text-align: center;
-            color: #1e3c72;
-            margin-bottom: 30px;
-            font-size: 1.8rem;
-        }
-
-        .search-tabs {
+        .query-tabs {
             display: flex;
             justify-content: center;
-            margin-bottom: 30px;
-            border-bottom: 1px solid #eee;
+            margin-bottom: 24px;
+            border-bottom: 2px solid #e5e7eb;
         }
 
-        .tab-btn {
-            padding: 12px 24px;
+        .query-tab-btn {
+            padding: 16px 32px;
             border: none;
             background: none;
-            color: #666;
+            color: #6b7280;
             cursor: pointer;
             font-size: 1rem;
-            border-bottom: 2px solid transparent;
+            font-weight: 500;
+            border-bottom: 3px solid transparent;
             transition: all 0.3s ease;
+            position: relative;
         }
 
-        .tab-btn.active {
+        .query-tab-btn.active {
             color: #1e3c72;
             border-bottom-color: #1e3c72;
         }
 
-        .search-input-group {
+        .query-tab-btn:hover {
+            color: #1e3c72;
+        }
+
+        .query-input-group {
             display: flex;
-            gap: 12px;
+            gap: 16px;
             max-width: 600px;
             margin: 0 auto;
         }
 
-        .search-input {
+        .query-input {
             flex: 1;
-            padding: 15px 20px;
-            border: 2px solid #e0e0e0;
-            border-radius: 8px;
+            padding: 16px 20px;
+            border: 2px solid #e5e7eb;
+            border-radius: 10px;
             font-size: 1rem;
-            transition: border-color 0.3s ease;
-        }
-
-        .search-input:focus {
+            transition: all 0.3s ease;
             outline: none;
-            border-color: #1e3c72;
         }
 
-        .search-btn {
-            padding: 15px 30px;
-            background: #1e3c72;
+        .query-input:focus {
+            border-color: #1e3c72;
+            box-shadow: 0 0 0 3px rgba(30, 60, 114, 0.1);
+        }
+
+        .query-btn {
+            padding: 16px 32px;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
             color: white;
             border: none;
-            border-radius: 8px;
+            border-radius: 10px;
             font-size: 1rem;
+            font-weight: 600;
             cursor: pointer;
-            transition: background 0.3s ease;
+            transition: all 0.3s ease;
+            white-space: nowrap;
         }
 
-        .search-btn:hover {
-            background: #2a5298;
+        .query-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(30, 60, 114, 0.3);
         }
 
-        .tracking-results {
+        /* 区域二：主内容区样式 */
+        .main-content-area {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 32px;
             margin-bottom: 40px;
         }
 
-        .result-container {
+        /* 左栏：运单列表样式 */
+        .left-panel {
             background: white;
-            border-radius: 12px;
-            padding: 30px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            overflow: hidden;
         }
 
-        .info-card {
-            margin-bottom: 30px;
+        .order-list-header {
+            padding: 24px;
+            border-bottom: 1px solid #e5e7eb;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
         }
 
-        .info-card h4 {
+        .order-list-header h3 {
+            color: #1e3c72;
+            margin-bottom: 8px;
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+
+        .order-count {
+            color: #6b7280;
+            font-size: 0.9rem;
+        }
+
+        .order-list {
+            max-height: 600px;
+            overflow-y: auto;
+        }
+
+        .order-item {
+            padding: 20px 24px;
+            border-bottom: 1px solid #f3f4f6;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .order-item:hover {
+            background-color: #f8fafc;
+        }
+
+        .order-item.active {
+            background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+            border-left: 4px solid #1e3c72;
+        }
+
+        .order-item.active::before {
+            content: '';
+            position: absolute;
+            right: 24px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 8px;
+            height: 8px;
+            background: #1e3c72;
+            border-radius: 50%;
+        }
+
+        .order-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .order-number {
+            font-weight: 700;
+            color: #1e3c72;
+            font-size: 1.1rem;
+        }
+
+        .order-status {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .status-transporting {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .status-pending {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .status-delivered {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        .status-customs {
+            background: #fecaca;
+            color: #991b1b;
+        }
+
+        .order-route {
+            color: #374151;
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+
+        .order-time {
+            color: #6b7280;
+            font-size: 0.9rem;
+        }
+
+        /* 右侧可视化面板 - 抽屉式交互重构 */
+        .visualization-dashboard {
+            position: relative;
+            background-image: url('images/map-background.png');
+            background-size: cover;
+            background-position: center;
+            border-radius: 16px;
+            min-height: 600px;
+            overflow: hidden;
+        }
+
+        /* 地图容器 - 默认全屏展示 */
+        .map-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('images/map-background.png');
+            background-size: cover;
+            background-position: center;
+            z-index: 1;
+        }
+
+
+
+        /* 抽屉式信息面板 - 交互核心 */
+        .info-drawer {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            width: 40%;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(15px);
+            overflow-y: auto;
+            padding: 24px;
+            border-right: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 2px 0 20px rgba(0, 0, 0, 0.1);
+            z-index: 3;
+            /* 初始状态：完全移出可视区域左侧 */
+            transform: translateX(-100%);
+            /* 流畅的滑动动画 */
+            transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        /* 激活状态：滑入可视区域 */
+        .info-drawer.is-open {
+            transform: translateX(0);
+        }
+
+        /* 关闭按钮 */
+        .drawer-close-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 20px;
+            color: #6b7280;
+            cursor: pointer;
+            z-index: 4;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .drawer-close-btn:hover {
+            background: rgba(255, 255, 255, 1);
+            color: #374151;
+            transform: scale(1.1);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .drawer-close-btn .close-icon {
+            font-weight: bold;
+            line-height: 1;
+        }
+
+
+
+        /* 模块基础样式 */
+        .summary-module, .timeline-module {
+            margin-bottom: 32px;
+        }
+
+        .summary-module:last-child, .timeline-module:last-child {
+            margin-bottom: 0;
+        }
+
+        /* 模块标题样式 */
+        .summary-module h3, .timeline-module h3 {
             color: #1e3c72;
             margin-bottom: 20px;
             font-size: 1.3rem;
+            font-weight: 700;
+            text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
         }
 
-        .info-grid {
+        /* 运单概要头部 */
+        .summary-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        /* 状态标签 */
+        .summary-status {
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            background: #dcfce7;
+            color: #166534;
+            box-shadow: 0 2px 8px rgba(22, 101, 52, 0.2);
+        }
+
+        /* 概要信息网格 */
+        .summary-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
+            grid-template-columns: 1fr;
+            gap: 16px;
         }
 
-        .info-item {
+        .summary-item {
             display: flex;
             flex-direction: column;
         }
 
-        .info-item .label {
+        .summary-item .label {
             font-weight: 600;
-            color: #666;
-            margin-bottom: 5px;
+            color: #6b7280;
+            margin-bottom: 6px;
+            font-size: 0.85rem;
         }
 
-        .info-item .value {
+        .summary-item .value {
+            color: #111827;
             font-size: 1.1rem;
-            color: #333;
+            font-weight: 700;
         }
 
-        .info-item .value.status {
-            color: #28a745;
-            font-weight: 600;
-        }
-
-        .tracking-timeline {
-            margin-top: 30px;
-        }
-
-        .tracking-timeline h4 {
-            color: #1e3c72;
-            margin-bottom: 20px;
-            font-size: 1.3rem;
-        }
-
+        /* 物流节点时间轴 */
         .timeline {
             position: relative;
-            padding-left: 30px;
         }
 
         .timeline::before {
             content: '';
             position: absolute;
-            left: 15px;
+            left: 120px;
             top: 0;
             bottom: 0;
             width: 2px;
-            background: #e0e0e0;
+            background: #e5e7eb;
         }
 
         .timeline-item {
             position: relative;
-            margin-bottom: 30px;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: flex-start;
         }
 
-        .timeline-dot {
+        .timeline-time {
+            width: 120px;
+            padding-right: 20px;
+            text-align: right;
+            color: #6b7280;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .timeline-content {
+            flex: 1;
+            padding-left: 20px;
+        }
+
+        .timeline-title {
+            color: #111827;
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .timeline-description {
+            color: #6b7280;
+            font-size: 0.85rem;
+            margin-bottom: 8px;
+        }
+
+        .timeline-status {
+            color: #059669;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        /* 时间轴圆点 */
+        .timeline-item::before {
+            content: '';
             position: absolute;
-            left: -37px;
-            top: 5px;
+            left: 115px;
+            top: 6px;
             width: 12px;
             height: 12px;
             border-radius: 50%;
-            background: #e0e0e0;
-            border: 3px solid white;
-            box-shadow: 0 0 0 2px #e0e0e0;
+            background: #10b981;
+            border: 2px solid #ffffff;
+            box-shadow: 0 0 0 2px #e5e7eb;
         }
 
-        .timeline-item.completed .timeline-dot {
-            background: #28a745;
-            box-shadow: 0 0 0 2px #28a745;
+        /* 状态颜色变体 */
+        .timeline-item.status-pending::before {
+            background: #f59e0b;
         }
 
-        .timeline-item.current .timeline-dot {
-            background: #ffc107;
-            box-shadow: 0 0 0 2px #ffc107;
+        .timeline-item.status-current::before {
+            background: #3b82f6;
         }
 
-        .timeline-content h5 {
-            color: #333;
-            margin-bottom: 5px;
-            font-size: 1.1rem;
+        .timeline-item.status-success::before {
+            background: #10b981;
         }
 
-        .timeline-content p {
-            color: #666;
-            margin-bottom: 5px;
-        }
 
-        .timeline-content .time {
-            color: #999;
-            font-size: 0.9rem;
-        }
-
-        .service-features {
-            margin-bottom: 40px;
-        }
-
-        .service-features h2 {
-            text-align: center;
-            color: #1e3c72;
-            margin-bottom: 40px;
-            font-size: 2rem;
-        }
-
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-        }
-
-        .feature-card {
-            background: white;
-            padding: 30px;
-            border-radius: 12px;
-            text-align: center;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-            transition: transform 0.3s ease;
-        }
-
-        .feature-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .feature-icon {
-            font-size: 3rem;
-            margin-bottom: 20px;
-        }
-
-        .feature-card h3 {
-            color: #1e3c72;
-            margin-bottom: 15px;
-            font-size: 1.3rem;
-        }
-
-        .feature-card p {
-            color: #666;
-            line-height: 1.6;
+        /* 响应式设计 */
+        @media (max-width: 1200px) {
+            .main-content-area {
+                grid-template-columns: 1fr;
+                gap: 24px;
+            }
+            
+            .left-panel {
+                order: 2;
+            }
+            
+            .visualization-dashboard {
+                order: 1;
+            }
         }
 
         @media (max-width: 768px) {
-            .search-input-group {
-                flex-direction: column;
-            }
-            
-            .search-tabs {
+            .query-tabs {
                 flex-direction: column;
                 align-items: center;
             }
             
-            .info-grid {
-                grid-template-columns: 1fr;
+            .query-input-group {
+                flex-direction: column;
+            }
+            
+            /* 抽屉在小屏幕上的响应式调整 */
+            .info-drawer {
+                width: 100%;
+                transform: translateX(-100%);
+            }
+            
+            .info-drawer.is-open {
+                transform: translateX(0);
+            }
+            
+            .visualization-dashboard {
+                min-height: 500px;
+            }
+            
+            .timeline::before {
+                left: 80px;
+            }
+            
+            .timeline-time {
+                width: 80px;
+                font-size: 0.8rem;
+            }
+            
+            .timeline-item::before {
+                left: 79px;
+            }
+            
+            .timeline-content {
+                padding-left: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 16px;
+            }
+            
+            .query-container {
+                padding: 20px;
+            }
+            
+            .info-drawer {
+                padding: 16px;
+            }
+            
+            .visualization-dashboard {
+                min-height: 450px;
+            }
+            
+            .order-item {
+                padding: 16px 20px;
             }
         }
     </style>
